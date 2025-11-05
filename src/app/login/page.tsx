@@ -3,20 +3,50 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { ApiRoutes } from "@/enum/api";
+import { ApiResponse, UserPayload } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "sonner";
 
 export default function Login() {
   const router = useRouter();
-  const handleSubmit = (e: React.FormEvent) => {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Login Successful!");
-    router.push("/dashboard");
+    setLoading(true);
+
+    try {
+      console.log(form)
+      const response = await fetch(`${ApiRoutes.BASE_URL}${ApiRoutes.LOGIN}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const data: ApiResponse<UserPayload> = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message); 
+      }
+
+      localStorage.setItem("token", data.payload!.token);
+      toast.success(data.message);
+      router.push("/dashboard");
+    } catch (error: any) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
     try {
-      const response = await fetch("/api/auth/google"); // API do back-end
+      const response = await fetch("/api/auth/google");
       if (response.ok) {
         toast.success("Google Login Successful!");
         router.push("/dashboard");
@@ -31,7 +61,6 @@ export default function Login() {
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
-      {/* Formulário tradicional */}
       <form
         onSubmit={handleSubmit}
         className="space-y-4 p-6 bg-card rounded-lg shadow-md w-96"
@@ -41,17 +70,29 @@ export default function Login() {
 
           <div className="flex flex-col gap-1">
             <Label htmlFor="email">Email</Label>
-            <Input id="email" type="email" placeholder="seu@email.com" />
+            <Input
+              id="email"
+              type="email"
+              placeholder="seu@email.com"
+              value={form.email}
+              onChange={(e) => setForm({ ...form, email: e.target.value })}
+            />
           </div>
 
           <div className="flex flex-col gap-1">
             <Label htmlFor="password">Senha</Label>
-            <Input id="password" type="password" placeholder="••••••••" />
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+            />
           </div>
         </fieldset>
 
         <Button type="submit" className="w-full cursor-pointer">
-          Entrar
+          {loading ? "Entrando..." : "Entrar"}
         </Button>
       </form>
 
