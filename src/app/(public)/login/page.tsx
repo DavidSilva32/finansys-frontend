@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import PasswordInput from "@/components/ui/passwordInput";
+import PasswordInput from "@/components/passwordInput";
 import { ApiRoutes } from "@/enum/apiRoutes";
 import { ApiResponse, LoginResponse } from "@/types/apiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
