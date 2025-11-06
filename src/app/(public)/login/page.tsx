@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { Loader2 } from "lucide-react";
 
 const loginSchema = z.object({
   email: z.email({ error: "Invalid Email" }),
@@ -91,7 +92,14 @@ export default function Login() {
           </fieldset>
 
           <Button type="submit" className="w-full h-10" disabled={isSubmitting}>
-            {isSubmitting ? "Logging in..." : "Log In"}
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Entrando...
+              </div>
+            ) : (
+              "Entrar"
+            )}
           </Button>
         </form>
 

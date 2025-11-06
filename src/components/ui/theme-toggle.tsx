@@ -21,7 +21,7 @@ export default function ThemeToggle({ fixed }: ThemeToggleProps) {
     <div className={fixed ? "fixed top-4 right-4 z-50" : ""}>
       <Button
         variant="outline"
-        size="sm"
+        size="icon"
         onClick={toggleTheme}
         className="cursor-pointer"
       >

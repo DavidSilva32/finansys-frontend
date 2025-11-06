@@ -7,7 +7,7 @@ import PasswordInput from "@/components/passwordInput";
 import { ApiRoutes } from "@/enum/apiRoutes";
 import { ApiResponse, RegisterResponse } from "@/types/apiResponse";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UserPlus } from "lucide-react";
+import { Loader2, UserPlus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -106,7 +106,14 @@ export default function Register() {
           <PasswordInput register={register} error={errors.password} />
 
           <Button type="submit" className="w-full h-10" disabled={isSubmitting}>
-            {isSubmitting ? "Registering..." : "Register and Log In"}
+            {isSubmitting ? (
+              <div className="flex items-center justify-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                "Register and Log In"
+              </div>
+            ) : (
+              "Entrar"
+            )}
           </Button>
         </form>
 
