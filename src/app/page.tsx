@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
+import { isTokenExpired } from "@/lib/authUtils";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -9,7 +10,12 @@ export default function Home() {
   const { t } = useI18n();
 
   const goToLogin = () => {
-    router.push("/login");
+    const token = localStorage.getItem("token");
+    if (token && !isTokenExpired(token)) {
+      router.push("/dashboard");
+    } else {
+      router.push("/login");
+    }
   };
 
   return (
