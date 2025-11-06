@@ -1,4 +1,4 @@
-import DashboardHeader from "@/components/dashboard/dashboardHeader";
+import DashboardHeader from "@/components/layout/dashboardHeader";
 import ProtectedLayout from "@/components/protectedLayout";
 
 export default function DashboardLayout({
@@ -10,7 +10,7 @@ export default function DashboardLayout({
     <ProtectedLayout>
       <div className="min-h-screen bg-background flex flex-col">
         <DashboardHeader />
-        <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+        <main className="flex-1 p-4 md:p-6 lg:p-8 w-full">
           {children}
         </main>
       </div>

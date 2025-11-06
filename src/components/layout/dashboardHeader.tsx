@@ -15,8 +15,13 @@ export default function DashboardHeader() {
 
   return (
     <header className="sticky top-0 z-10 bg-card/80 backdrop-blur-sm border-b border-border">
-      <div className="flex justify-between items-center px-4 py-3 max-w-7xl mx-auto">
-        <h1 className="text-xl font-extrabold text-primary">FinanSys</h1>
+      <div className="flex justify-between items-center px-6 py-3 w-full">
+         <h1
+          onClick={() => router.push("/")}
+          className="text-xl font-bold text-primary cursor-pointer"
+        >
+          FinanSys
+        </h1>
         <div className="flex items-center gap-2">
           <ThemeToggle />
           <Button
