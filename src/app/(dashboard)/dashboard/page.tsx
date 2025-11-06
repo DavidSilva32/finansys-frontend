@@ -1,12 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { QuickActionButton } from "@/components/quickActionButton";
-import { useAuthCheck } from "@/hooks/useAuthCheck";
+import { QuickActionButton } from "@/components/dashboard/quickActionButton";
 import {
   DollarSign,
   FileText,
-  Loader2,
   LogOut,
   Minus,
   Plus,
@@ -15,7 +13,7 @@ import {
   Users,
 } from "lucide-react";
 import { useMemo } from "react";
-import { SummaryCard } from "@/components/summaryCard";
+import { SummaryCard } from "@/components/dashboard/summaryCard";
 import { useI18n } from "@/context/I18nContext";
 
 interface ModuleButtonProps {
@@ -25,26 +23,12 @@ interface ModuleButtonProps {
 
 export default function Dashboard() {
   const { t } = useI18n();
-  const { isAuthenticated, isChecking } = useAuthCheck();
 
   const authToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const formattedToken = useMemo(() => {
     return authToken ? authToken.substring(0, 15) + "..." : "N/A";
   }, [authToken]);
-
-  if (isChecking) {
-    return (
-      <div className="flex justify-center items-center min-h-screen bg-background text-foreground">
-        <Loader2 className="h-6 w-6 animate-spin mr-2" />
-        Loading authentication...
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return null;
-  }
 
   const mockData = {
     totalRevenue: "R$ 52.300,00",
