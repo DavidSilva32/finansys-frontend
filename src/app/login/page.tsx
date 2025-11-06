@@ -8,14 +8,31 @@ import { ApiResponse, LoginResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { z } from "zod";
 
 export default function Login() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
 
+  const loginSchema = z.object({
+    email: z.email({error:"Invalid Email"}),
+    password: z
+      .string()
+      .min(8, {error:"Password must be longer than or equal to 8 characters"}),
+  });
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const validation = loginSchema.safeParse(form);
+
+    if (!validation.success) {
+      const messages = validation.error.issues.map((err) => err.message).join("\n");
+      toast.error(messages);
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -30,7 +47,7 @@ export default function Login() {
       const data: ApiResponse<LoginResponse> = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message); 
+        throw new Error(data.message);
       }
 
       localStorage.setItem("token", data.payload!.token);
@@ -40,21 +57,6 @@ export default function Login() {
       toast.error(error.message);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    try {
-      const response = await fetch("/api/auth/google");
-      if (response.ok) {
-        toast.success("Google Login Successful!");
-        router.push("/dashboard");
-      } else {
-        toast.error("Google Login Failed!");
-      }
-    } catch (error) {
-      console.error("Google Login Error:", error);
-      toast.error("An error occurred during Google Login.");
     }
   };
 
@@ -73,6 +75,7 @@ export default function Login() {
               id="email"
               type="email"
               placeholder="seu@email.com"
+              
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
             />
@@ -96,7 +99,7 @@ export default function Login() {
       </form>
 
       {/* Google Button Login */}
-      <Button
+      {/* <Button
         onClick={handleGoogleLogin}
         className="w-96 flex items-center justify-center gap-2 cursor-pointer"
         variant="outline"
@@ -124,7 +127,7 @@ export default function Login() {
           />
         </svg>
         Entrar com Google
-      </Button>
+      </Button> */}
     </main>
   );
 }
