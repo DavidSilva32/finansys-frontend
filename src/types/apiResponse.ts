@@ -4,7 +4,7 @@ export interface User {
   email: string;
 }
 
-export interface UserPayload {
+export interface LoginResponse {
   user: User;
   token: string;
 }

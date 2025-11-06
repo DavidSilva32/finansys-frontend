@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ApiRoutes } from "@/enum/api";
-import { ApiResponse, UserPayload } from "@/types/apiResponse";
+import { ApiRoutes } from "@/enum/apiRoutes";
+import { ApiResponse, LoginResponse } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -19,8 +19,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      console.log(form)
-      const response = await fetch(`${ApiRoutes.BASE_URL}${ApiRoutes.LOGIN}`, {
+      const response = await fetch(`${ApiRoutes.AUTH.LOGIN}`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -28,7 +27,7 @@ export default function Login() {
         body: JSON.stringify(form),
       });
 
-      const data: ApiResponse<UserPayload> = await response.json();
+      const data: ApiResponse<LoginResponse> = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message); 
