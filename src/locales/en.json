@@ -1,9 +1,16 @@
 {
   "home": {
-    "title": "Welcome to FinanSys",
-    "description": "Intelligent Financial System for Small Businesses — control of income and expenses, automatic monthly balance and dashboard with graphs.",
-    "loading": "Accessing...",
-    "access": "Access"
+    "title": "Simple and efficient financial control",
+    "description": "Organize, automate, and monitor your company's finances with a modern and secure platform.",
+    "access": "Access the system",
+    "loading": "Checking...",
+    "feature_automation": "Automation",
+    "feature_automation_desc": "Reduce manual tasks and gain time to focus on what really matters.",
+    "feature_control": "Real-time control",
+    "feature_control_desc": "View your income, expenses, and reports in seconds.",
+    "feature_security": "Security",
+    "feature_security_desc": "Your data is encrypted and protected with top-tier technology.",
+    "footer": "All rights reserved."
   },
   "login": {
     "title": "Access System",

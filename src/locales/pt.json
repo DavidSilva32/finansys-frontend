@@ -1,9 +1,16 @@
 {
   "home": {
-    "title": "Bem-vindo ao FinanSys",
-    "description": "Sistema Financeiro Inteligente para Pequenas Empresas — controle de receitas e despesas, saldo mensal automático e painel com gráficos.",
-    "loading": "Acessando...",
-    "access": "Acessar"
+    "title": "Controle financeiro simples e eficiente",
+    "description": "Organize, automatize e acompanhe as finanças da sua empresa com uma plataforma moderna e segura.",
+    "access": "Acessar o sistema",
+    "loading": "Verificando...",
+    "feature_automation": "Automatização",
+    "feature_automation_desc": "Reduza tarefas manuais e ganhe tempo para focar no que importa.",
+    "feature_control": "Controle em tempo real",
+    "feature_control_desc": "Visualize suas receitas, despesas e relatórios em segundos.",
+    "feature_security": "Segurança",
+    "feature_security_desc": "Seus dados são criptografados e protegidos com tecnologia de ponta.",
+    "footer": "Todos os direitos reservados."
   },
   "login": {
     "title": "Acessar Sistema",
