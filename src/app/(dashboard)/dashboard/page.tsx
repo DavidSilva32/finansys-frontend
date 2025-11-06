@@ -14,9 +14,9 @@ import {
   TrendingUp,
   Users,
 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 import { SummaryCard } from "@/components/summaryCard";
+import { useI18n } from "@/context/I18nContext";
 
 interface ModuleButtonProps {
   icon: React.ElementType;
@@ -24,7 +24,7 @@ interface ModuleButtonProps {
 }
 
 export default function Dashboard() {
-  const router = useRouter();
+  const { t } = useI18n();
   const { isAuthenticated, isChecking } = useAuthCheck();
 
   const authToken =
@@ -56,37 +56,35 @@ export default function Dashboard() {
     <div className="bg-background min-h-screen">
       <main className="p-4 md:p-6 lg:p-8 max-w-7xl mx-auto space-y-8">
         <h2 className="text-3xl font-bold text-card-foreground">
-          Dashboard Summary
+          {t("dashboard.title")}
         </h2>
 
         <section
           aria-labelledby="summary-heading"
           className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
         >
-          <h2 id="summary-heading" className="sr-only">
-                
-          </h2>
+          <h2 id="summary-heading" className="sr-only"></h2>
 
           <SummaryCard
-            title="Total Revenue"
+            title={t("dashboard.revenue.title")}
             value={mockData.totalRevenue}
-            description="vs last month"
+            description={t("dashboard.revenue.description")}
             icon={TrendingUp}
             valueColor="text-green-500"
           />
 
           <SummaryCard
-            title="Total Expenses"
+            title={t("dashboard.expenses.title")}
             value={mockData.totalExpenses}
-            description="vs last month"
+            description={t("dashboard.expenses.description")}
             icon={TrendingDown}
             valueColor="text-red-500"
           />
 
           <SummaryCard
-            title="Current Balance"
+            title={t("dashboard.balance.title")}
             value={mockData.currentBalance}
-            description="Month-to-Date"
+            description={t("dashboard.balance.description")}
             icon={DollarSign}
             className="md:col-span-2 lg:col-span-1"
             valueColor={
@@ -108,9 +106,12 @@ export default function Dashboard() {
           <h2 id="quick-actions-heading" className="sr-only">
             Quick Actions
           </h2>
-          <QuickActionButton title="Record New Revenue" icon={Plus} />
           <QuickActionButton
-            title="Record New Expense"
+            title={t("dashboard.actions.addRevenue")}
+            icon={Plus}
+          />
+          <QuickActionButton
+            title={t("dashboard.actions.addExpense")}
             variant="secondary"
             icon={Minus}
           />
@@ -126,16 +127,16 @@ export default function Dashboard() {
 
           <div className="bg-card p-6 rounded-xl shadow-lg border border-border lg:col-span-2 h-96">
             <h3 className="text-lg font-semibold text-card-foreground mb-4">
-              Cash Flow Overview (Placeholder)
+              {t("dashboard.cashflow.title")}
             </h3>
             <div className="text-muted-foreground italic h-full flex items-center justify-center">
-              <p>Monthly Cash Flow Chart will be displayed here.</p>
+              <p>{t("dashboard.cashflow.placeholder")}</p>
             </div>
           </div>
 
           <div className="bg-card p-6 rounded-xl shadow-lg border border-border h-96">
             <h3 className="text-lg font-semibold text-card-foreground mb-4">
-              Recent Transactions (Mock)
+              {t("dashboard.transactions.title")}
             </h3>
             <ul className="space-y-3 text-sm">
               <li className="flex justify-between items-center text-green-500">
@@ -164,19 +165,31 @@ export default function Dashboard() {
             id="module-nav-heading"
             className="text-xl font-semibold text-card-foreground mb-4"
           >
-            Core Modules
+            {t("dashboard.modules.title")}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <ModuleButton icon={FileText} title="Reports" />
-            <ModuleButton icon={Users} title="Clients & Suppliers" />
-            <ModuleButton icon={LogOut} title="Multiusers (Future)" />
-            <ModuleButton icon={DollarSign} title="Settings" />
+            <ModuleButton
+              icon={FileText}
+              title={t("dashboard.modules.reports")}
+            />
+            <ModuleButton
+              icon={Users}
+              title={t("dashboard.modules.clients")}
+            />
+            <ModuleButton
+              icon={LogOut}
+              title={t("dashboard.modules.multiusers")}
+            />
+            <ModuleButton
+              icon={DollarSign}
+              title={t("dashboard.modules.settings")}
+            />
           </div>
         </section>
 
         <footer className="mt-8 pt-4 border-t border-border text-center">
           <p className="text-xs text-muted-foreground">
-            Auth Status: Authenticated | Token Preview:{" "}
+            {t("dashboard.footer.authStatus")}: Authenticated | Token Preview:{" "}
             <code className="break-all">{formattedToken}</code>
           </p>
         </footer>

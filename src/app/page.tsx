@@ -1,10 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useI18n } from "@/context/I18nContext";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
+  const { t } = useI18n();
 
   const goToLogin = () => {
     router.push("/login");
@@ -13,13 +15,13 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background font-sans px-4">
       <h1 className="text-4xl font-bold mb-4 text-center text-primary">
-        Welcome to FinanSys
+        {t("home.title")}
       </h1>
       <p className="text-center text-muted-foreground mb-6 max-w-xl">
-        Intelligent Financial System for Small Businesses — control of income and expenses, automatic monthly balance and dashboard with graphs.
+        {t("home.description")}
       </p>
       <Button onClick={goToLogin} className="px-6 py-3 cursor-pointer">
-        Access
+        {t("home.button.access")}
       </Button>
     </main>
   );

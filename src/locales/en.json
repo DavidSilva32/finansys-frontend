@@ -1,0 +1,65 @@
+{
+  "home": {
+    "title": "Welcome to FinanSys",
+    "description": "Intelligent Financial System for Small Businesses — control of income and expenses, automatic monthly balance and dashboard with graphs.",
+    "button": {
+      "access": "Access"
+    }
+  },
+  "login": {
+    "title": "Access System",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "loading": "Signing in...",
+    "submit": "Sign In",
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create one now!"
+  },
+  "register": {
+    "title": "Create New Account",
+    "nameLabel": "Full Name",
+    "namePlaceholder": "Your name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "your@email.com",
+    "loading": "Registering and Logging in...",
+    "submit": "Register",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Log In"
+  },
+  "dashboard": {
+    "title": "Dashboard Summary",
+    "revenue": {
+      "title": "Total Revenue",
+      "description": "vs last month"
+    },
+    "expenses": {
+      "title": "Total Expenses",
+      "description": "vs last month"
+    },
+    "balance": {
+      "title": "Current Balance",
+      "description": "Month-to-Date"
+    },
+    "actions": {
+      "addRevenue": "Record New Revenue",
+      "addExpense": "Record New Expense"
+    },
+    "cashflow": {
+      "title": "Cash Flow Overview (Placeholder)",
+      "placeholder": "Monthly Cash Flow Chart will be displayed here."
+    },
+    "transactions": {
+      "title": "Recent Transactions (Mock)"
+    },
+    "modules": {
+      "title": "Core Modules",
+      "reports": "Reports",
+      "clients": "Clients & Suppliers",
+      "multiusers": "Multiusers (Future)",
+      "settings": "Settings"
+    },
+    "footer": {
+      "authStatus": "Auth Status"
+    }
+  }
+}

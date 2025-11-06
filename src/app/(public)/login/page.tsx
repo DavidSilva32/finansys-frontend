@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { Loader2 } from "lucide-react";
+import { useI18n } from "@/context/I18nContext";
 
 const loginSchema = z.object({
   email: z.email({ error: "Invalid Email" }),
@@ -24,6 +25,7 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 export default function Login() {
   const router = useRouter();
+  const { t } = useI18n();
 
   const {
     register,
@@ -65,19 +67,19 @@ export default function Login() {
           id="login-heading"
           className="text-2xl font-bold text-card-foreground mb-6 text-center"
         >
-          Access System
+          {t("login.title")}
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <fieldset className="space-y-4">
-            <legend className="sr-only">Login Form</legend>
+            <legend className="sr-only">{t("login.title")}</legend>
 
             <div className="flex flex-col gap-1">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("login.emailLabel")}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="your@email.com"
+                placeholder={t("login.emailPlaceholder")}
                 {...register("email")}
                 className={errors.email ? "border-red-500" : "border-border"}
               />
@@ -95,23 +97,23 @@ export default function Login() {
             {isSubmitting ? (
               <div className="flex items-center justify-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                Entrando...
+                {t("login.loading")}
               </div>
             ) : (
-              "Entrar"
+              t("login.submit")
             )}
           </Button>
         </form>
 
         <footer className="mt-6 pt-4 border-t border-border/70 text-center">
           <p className="text-sm text-muted-foreground">
-            Don't have an account?{" "}
+            {t("login.noAccount")}{" "}
             <a
               href="#"
               onClick={() => router.push("/register")}
               className="text-primary hover:underline font-medium cursor-pointer"
             >
-              Create one now!
+              {t("login.createAccount")}
             </a>
           </p>
         </footer>

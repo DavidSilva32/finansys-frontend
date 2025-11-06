@@ -1,0 +1,65 @@
+{
+  "home": {
+    "title": "Bem-vindo ao FinanSys",
+    "description": "Sistema Financeiro Inteligente para Pequenas Empresas — controle de receitas e despesas, saldo mensal automático e painel com gráficos.",
+    "button": {
+      "access": "Acessar"
+    }
+  },
+  "login": {
+    "title": "Acessar Sistema",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "seu@email.com",
+    "loading": "Entrando...",
+    "submit": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "createAccount": "Crie uma agora!"
+  },
+  "register": {
+    "title": "Criar Nova Conta",
+    "nameLabel": "Nome Completo",
+    "namePlaceholder": "Seu nome",
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "seu@email.com",
+    "loading": "Registrando e Entrando...",
+    "submit": "Registrar",
+    "alreadyHaveAccount": "Já tem uma conta?",
+    "loginLink": "Entrar"
+  },
+  "dashboard": {
+    "title": "Resumo do Painel",
+    "revenue": {
+      "title": "Receita Total",
+      "description": "em relação ao mês passado"
+    },
+    "expenses": {
+      "title": "Despesas Totais",
+      "description": "em relação ao mês passado"
+    },
+    "balance": {
+      "title": "Saldo Atual",
+      "description": "Acumulado do mês"
+    },
+    "actions": {
+      "addRevenue": "Registrar Receita",
+      "addExpense": "Registrar Despesa"
+    },
+    "cashflow": {
+      "title": "Visão Geral do Fluxo de Caixa (Simulação)",
+      "placeholder": "O gráfico de fluxo de caixa mensal será exibido aqui."
+    },
+    "transactions": {
+      "title": "Transações Recentes (Simulação)"
+    },
+    "modules": {
+      "title": "Módulos Principais",
+      "reports": "Relatórios",
+      "clients": "Clientes e Fornecedores",
+      "multiusers": "Multiusuários (Futuro)",
+      "settings": "Configurações"
+    },
+    "footer": {
+      "authStatus": "Status de Autenticação"
+    }
+  }
+}

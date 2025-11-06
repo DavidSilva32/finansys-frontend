@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useI18n } from "@/context/I18nContext";
 
 const registerSchema = z.object({
   name: z.string().min(3, "Name must be at least 3 characters."),
@@ -25,6 +26,7 @@ type RegisterFormData = z.infer<typeof registerSchema>;
 
 export default function Register() {
   const router = useRouter();
+  const {t} = useI18n()
 
   const {
     register,
@@ -67,16 +69,16 @@ export default function Register() {
           className="text-2xl font-bold text-card-foreground mb-6 text-center flex items-center justify-center gap-2"
         >
           <UserPlus className="h-6 w-6 text-primary" />
-          Create New Account
+          {t("register.title")}
         </h1>
 
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex flex-col gap-1">
-            <Label htmlFor="name">Full Name</Label>
+            <Label htmlFor="name">{t("register.nameLabel")}</Label>
             <Input
               id="name"
               type="text"
-              placeholder="Your name"
+              placeholder={t("register.namePlaceholder")}
               {...register("name")}
               className={errors.name ? "border-red-500" : "border-border"}
             />
@@ -88,11 +90,11 @@ export default function Register() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="email">{t("register.emailLabel")}</Label>
             <Input
               id="email"
               type="email"
-              placeholder="your@email.com"
+              placeholder={t("register.emailPlaceholder")}
               {...register("email")}
               className={errors.email ? "border-red-500" : "border-border"}
             />
@@ -109,23 +111,23 @@ export default function Register() {
             {isSubmitting ? (
               <div className="flex items-center justify-center gap-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
-                "Register and Log In"
+                {t("register.loading")}
               </div>
             ) : (
-              "Entrar"
+              t("register.submit")
             )}
           </Button>
         </form>
 
         <footer className="mt-6 pt-4 border-t border-border/70 text-center">
           <p className="text-sm text-muted-foreground">
-            Already have an account?{" "}
+            {t("register.alreadyHaveAccount")}{" "}
             <a
               href="#"
               onClick={() => router.push("/login")}
               className="text-primary hover:underline font-medium cursor-pointer"
             >
-              Log In
+              {t("register.loginLink")}
             </a>
           </p>
         </footer>
