@@ -2,9 +2,8 @@
   "home": {
     "title": "Bem-vindo ao FinanSys",
     "description": "Sistema Financeiro Inteligente para Pequenas Empresas — controle de receitas e despesas, saldo mensal automático e painel com gráficos.",
-    "button": {
-      "access": "Acessar"
-    }
+    "loading": "Acessando...",
+    "access": "Acessar"
   },
   "login": {
     "title": "Acessar Sistema",

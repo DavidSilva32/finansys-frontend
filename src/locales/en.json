@@ -2,9 +2,8 @@
   "home": {
     "title": "Welcome to FinanSys",
     "description": "Intelligent Financial System for Small Businesses — control of income and expenses, automatic monthly balance and dashboard with graphs.",
-    "button": {
-      "access": "Access"
-    }
+    "loading": "Accessing...",
+    "access": "Access"
   },
   "login": {
     "title": "Access System",

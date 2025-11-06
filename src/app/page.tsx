@@ -2,20 +2,17 @@
 
 import { Button } from "@/components/ui/button";
 import { useI18n } from "@/context/I18nContext";
-import { isTokenExpired } from "@/lib/authUtils";
+import { useAuthCheck } from "@/hooks/useAuthCheck";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
   const { t } = useI18n();
+  const { isAuthenticated, isChecking } = useAuthCheck(false);
 
   const goToLogin = () => {
-    const token = localStorage.getItem("accessToken");
-    if (token && !isTokenExpired(token)) {
-      router.push("/dashboard");
-    } else {
-      router.push("/login");
-    }
+    if (isChecking) return;
+    router.push(isAuthenticated ? "/dashboard" : "/login");
   };
 
   return (
@@ -27,7 +24,7 @@ export default function Home() {
         {t("home.description")}
       </p>
       <Button onClick={goToLogin} className="px-6 py-3 cursor-pointer">
-        {t("home.button.access")}
+        {isChecking ? t("home.loading") : t("home.access")}
       </Button>
     </main>
   );

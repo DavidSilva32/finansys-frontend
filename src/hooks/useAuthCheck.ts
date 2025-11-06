@@ -5,7 +5,7 @@ import { ApiRoutes } from "@/enum/apiRoutes";
 import { toast } from "sonner";
 import { ApiResponse, RefreshResponse } from "@/types/apiResponse";
 
-export const useAuthCheck = () => {
+export const useAuthCheck = (redirectOnFail: boolean = true) => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
@@ -20,9 +20,9 @@ export const useAuthCheck = () => {
     const refreshToken = localStorage.getItem("refreshToken");
     const userId = accessToken ? decodeTokenPayload(accessToken)?.sub : null;
 
-    if (!accessToken || !refreshToken) {
+    if (!accessToken && !refreshToken) {
       setIsAuthenticated(false);
-      router.push("/login");
+      if (redirectOnFail) router.push("/login");
       setIsChecking(false);
       return;
     }
@@ -33,21 +33,16 @@ export const useAuthCheck = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          userId,
-          refreshToken,
-        }),
+        body: JSON.stringify({ userId, refreshToken }),
       })
         .then(async (res) => {
           const data: ApiResponse<RefreshResponse> = await res.json();
 
-          if (!res.ok || !data.payload) throw new Error(data.message || "Session expired");
+          if (!res.ok || !data.payload)
+            throw new Error(data.message || "Session expired");
 
           localStorage.setItem("accessToken", data.payload.tokens.accessToken);
-          localStorage.setItem(
-            "refreshToken",
-            data.payload.tokens.refreshToken
-          );
+          localStorage.setItem("refreshToken", data.payload.tokens.refreshToken);
           setIsAuthenticated(true);
         })
         .catch((error: any) => {
@@ -55,14 +50,14 @@ export const useAuthCheck = () => {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           setIsAuthenticated(false);
-          router.push("/login");
+          if (redirectOnFail) router.push("/login");
         })
         .finally(() => setIsChecking(false));
     } else {
       setIsAuthenticated(true);
       setIsChecking(false);
     }
-  }, [router]);
+  }, [router, redirectOnFail]);
 
   return { isAuthenticated, isChecking };
 };
