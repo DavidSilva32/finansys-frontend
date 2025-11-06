@@ -4,20 +4,16 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { detectLocale, getTranslations, Locale } from "@/lib/i18n";
 
 type I18nContextType = {
-  locale: Locale;
   t: (key: string) => string;
-  setLocale: (locale: Locale) => void;
 };
 
 const I18nContext = createContext<I18nContextType | undefined>(undefined);
 
 export function I18nProvider({ children }: { children: React.ReactNode }) {
-  const [locale, setLocale] = useState<Locale>("en");
   const [translations, setTranslations] = useState<Record<string, any>>({});
 
   useEffect(() => {
     const detected = detectLocale();
-    setLocale(detected);
     setTranslations(getTranslations(detected));
   }, []);
 
@@ -32,7 +28,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <I18nContext.Provider value={{ locale, t, setLocale }}>
+    <I18nContext.Provider value={{ t }}>
       {children}
     </I18nContext.Provider>
   );

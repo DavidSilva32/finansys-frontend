@@ -50,7 +50,8 @@ export default function Register() {
 
       if (!response.ok) throw new Error(resData.message);
 
-      localStorage.setItem("token", resData.payload!.token);
+      localStorage.setItem("accessToken", resData.payload!.tokens.accessToken);
+      localStorage.setItem("refreshToken", resData.payload!.tokens.refreshToken);
       toast.success(resData.message);
       router.push("/dashboard");
     } catch (error: any) {

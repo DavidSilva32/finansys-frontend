@@ -28,7 +28,7 @@ export default function Dashboard() {
   const { isAuthenticated, isChecking } = useAuthCheck();
 
   const authToken =
-    typeof window !== "undefined" ? localStorage.getItem("token") : null;
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const formattedToken = useMemo(() => {
     return authToken ? authToken.substring(0, 15) + "..." : "N/A";
   }, [authToken]);
@@ -172,10 +172,7 @@ export default function Dashboard() {
               icon={FileText}
               title={t("dashboard.modules.reports")}
             />
-            <ModuleButton
-              icon={Users}
-              title={t("dashboard.modules.clients")}
-            />
+            <ModuleButton icon={Users} title={t("dashboard.modules.clients")} />
             <ModuleButton
               icon={LogOut}
               title={t("dashboard.modules.multiusers")}

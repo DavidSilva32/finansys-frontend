@@ -10,7 +10,7 @@ export default function Home() {
   const { t } = useI18n();
 
   const goToLogin = () => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
     if (token && !isTokenExpired(token)) {
       router.push("/dashboard");
     } else {

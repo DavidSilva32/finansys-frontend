@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { isTokenExpired } from "@/lib/authUtils";
+import { decodeTokenPayload, isTokenExpired } from "@/lib/authUtils";
+import { ApiRoutes } from "@/enum/apiRoutes";
 import { toast } from "sonner";
+import { ApiResponse, RefreshResponse } from "@/types/apiResponse";
 
 export const useAuthCheck = () => {
   const router = useRouter();
@@ -14,22 +16,52 @@ export const useAuthCheck = () => {
       return;
     }
 
-    const token = localStorage.getItem("token");
+    const accessToken = localStorage.getItem("accessToken");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const userId = accessToken ? decodeTokenPayload(accessToken)?.sub : null;
 
-    if (!token || isTokenExpired(token)) {
-      if (token) {
-        toast.error("Your session has expired. Please log in again.");
-      }
-
-      localStorage.removeItem("token");
+    if (!accessToken || !refreshToken) {
       setIsAuthenticated(false);
-
       router.push("/login");
-    } else {
-      setIsAuthenticated(true);
+      setIsChecking(false);
+      return;
     }
 
-    setIsChecking(false);
+    if (isTokenExpired(accessToken)) {
+      fetch(`${ApiRoutes.AUTH.REFRESH}`, {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId,
+          refreshToken,
+        }),
+      })
+        .then(async (res) => {
+          const data: ApiResponse<RefreshResponse> = await res.json();
+
+          if (!res.ok || !data.payload) throw new Error(data.message || "Session expired");
+
+          localStorage.setItem("accessToken", data.payload.tokens.accessToken);
+          localStorage.setItem(
+            "refreshToken",
+            data.payload.tokens.refreshToken
+          );
+          setIsAuthenticated(true);
+        })
+        .catch((error: any) => {
+          toast.error(error?.message || "Session expired");
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          setIsAuthenticated(false);
+          router.push("/login");
+        })
+        .finally(() => setIsChecking(false));
+    } else {
+      setIsAuthenticated(true);
+      setIsChecking(false);
+    }
   }, [router]);
 
   return { isAuthenticated, isChecking };

@@ -4,5 +4,6 @@ export class ApiRoutes {
   static readonly AUTH = {
     LOGIN: `${this.BASE_URL}/auth/login`,
     REGISTER: `${this.BASE_URL}/auth/register`,
+    REFRESH: `${this.BASE_URL}/auth/refresh`,
   };
 }

@@ -4,14 +4,23 @@ export interface User {
   email: string;
 }
 
+export interface Tokens {
+  accessToken: string;
+  refreshToken: string;
+}
+
 export interface LoginResponse {
-  user: Pick<User, 'id' | 'email'>;
-  token: string;
+  user: Pick<User, "id" | "email">;
+  tokens: Tokens;
 }
 
 export interface RegisterResponse {
   user: User;
-  token: string;
+  tokens: Tokens;
+}
+
+export interface RefreshResponse {
+  tokens: Tokens
 }
 
 export interface ApiResponse<T> {
