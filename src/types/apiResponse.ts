@@ -5,6 +5,11 @@ export interface User {
 }
 
 export interface LoginResponse {
+  user: Pick<User, 'id' | 'email'>;
+  token: string;
+}
+
+export interface RegisterResponse {
   user: User;
   token: string;
 }
