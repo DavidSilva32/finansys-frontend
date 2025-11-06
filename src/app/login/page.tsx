@@ -3,67 +3,58 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import PasswordInput from "@/components/ui/passwordInput";
 import { ApiRoutes } from "@/enum/apiRoutes";
 import { ApiResponse, LoginResponse } from "@/types/apiResponse";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
+const loginSchema = z.object({
+  email: z.email({error:"Invalid Email"}),
+  password: z
+    .string()
+    .min(8, {error:"Password must be longer than or equal to 8 characters"}),
+});
+
+type LoginFormData = z.infer<typeof loginSchema>;
+
 export default function Login() {
   const router = useRouter();
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [loading, setLoading] = useState(false);
+  
+  const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<LoginFormData>({
+    resolver: zodResolver(loginSchema)
+  })
 
-  const loginSchema = z.object({
-    email: z.email({error:"Invalid Email"}),
-    password: z
-      .string()
-      .min(8, {error:"Password must be longer than or equal to 8 characters"}),
-  });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const validation = loginSchema.safeParse(form);
-
-    if (!validation.success) {
-      const messages = validation.error.issues.map((err) => err.message).join("\n");
-      toast.error(messages);
-      return;
-    }
-
-    setLoading(true);
-
+  const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await fetch(`${ApiRoutes.AUTH.LOGIN}`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify(data),
       });
 
-      const data: ApiResponse<LoginResponse> = await response.json();
+      const resData: ApiResponse<LoginResponse> = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message);
-      }
+      if (!response.ok) throw new Error(resData.message);
 
-      localStorage.setItem("token", data.payload!.token);
-      toast.success(data.message);
+      localStorage.setItem("token", resData.payload!.token);
+      toast.success(resData.message);
       router.push("/dashboard");
     } catch (error: any) {
       toast.error(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen bg-background gap-6">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="space-y-4 p-6 bg-card rounded-lg shadow-md w-96"
       >
         <fieldset className="space-y-4">
@@ -75,26 +66,21 @@ export default function Login() {
               id="email"
               type="email"
               placeholder="seu@email.com"
-              
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
+              {...register("email")}
+              className={`border ${
+                errors.email ? "border-red-500" : "border-border"
+              } focus:outline-none focus:ring-2 focus:ring-primary`}
             />
+            {errors.email && (
+              <span className="text-red-500 text-sm">{errors.email.message}</span>
+            )}
           </div>
 
-          <div className="flex flex-col gap-1">
-            <Label htmlFor="password">Senha</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-            />
-          </div>
+          <PasswordInput register={register} error={errors.password} />
         </fieldset>
 
         <Button type="submit" className="w-full cursor-pointer">
-          {loading ? "Entrando..." : "Entrar"}
+          {isSubmitting ? "Entrando..." : "Entrar"}
         </Button>
       </form>
 
