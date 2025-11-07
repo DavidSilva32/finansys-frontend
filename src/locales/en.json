@@ -57,7 +57,8 @@
     "transactions": {
       "title": "Transactions",
       "loading": "Loading...",
-      "noTransactions": "No transactions found."
+      "noTransactions": "No transactions found.",
+      "viewAll": "View All"
     },
     "modules": {
       "title": "Core Modules",

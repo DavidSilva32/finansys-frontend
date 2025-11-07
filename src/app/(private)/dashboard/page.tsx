@@ -18,6 +18,7 @@ import { SummaryCard } from "@/components/dashboard/summaryCard";
 import { useI18n } from "@/context/I18nContext";
 import { useTransactions } from "@/hooks/useTransctions";
 import { decodeTokenPayload } from "@/lib/authUtils";
+import {useRouter} from "next/navigation";
 
 interface ModuleButtonProps {
   icon: React.ElementType;
@@ -26,6 +27,7 @@ interface ModuleButtonProps {
 
 export default function Dashboard() {
   const { t } = useI18n();
+  const router = useRouter()
 
   const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
@@ -182,6 +184,15 @@ export default function Dashboard() {
                 ))
               )}
             </ul>
+            <div className="mt-2 flex justify-end">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={() => router.push("/transactions")}
+              >
+                {t("dashboard.transactions.viewAll")}
+              </Button>
+            </div>
           </div>
         </motion.section>
 

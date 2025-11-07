@@ -57,7 +57,8 @@
     "transactions": {
       "title": "Transações",
       "loading": "Carregando...",
-      "noTransactions": "Nenhuma transação encontrada."
+      "noTransactions": "Nenhuma transação encontrada.",
+      "viewAll": "Ver todas"
     },
     "modules": {
       "title": "Módulos Principais",
