@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import ThemeToggle from "../ui/theme-toggle";
 import { useRouter } from "next/navigation";
 
-export default function DashboardHeader() {
+export default function PrivateHeader() {
   const router = useRouter();
 
   const handleLogout = () => {
