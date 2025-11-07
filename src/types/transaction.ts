@@ -1,6 +1,8 @@
+import { TransactionType } from "@/enum/transationType";
+
 export interface Transaction {
   id: string;
-  type: "INCOME" | "EXPENSE";
+  type: TransactionType;
   category: string;
   description?: string;
   amount: string;
@@ -9,7 +11,7 @@ export interface Transaction {
 }
 
 export interface TransactionCardProps {
-  type: "INCOME" | "EXPENSE";
+  type: TransactionType;
   category: string;
   description?: string;
   amount: string;
