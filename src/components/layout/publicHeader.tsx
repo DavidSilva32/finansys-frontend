@@ -10,7 +10,7 @@ export default function PublicHeader() {
 
   return (
     <header className="w-full bg-surface border-b border-border shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4">
         <h1
           onClick={() => router.push("/")}
           className="text-2xl font-semibold text-primary cursor-pointer"
