@@ -2,6 +2,7 @@
 
 import { useAuthCheck } from "@/hooks/useAuthCheck";
 import LoadingScreen from "./loadingScreen";
+import router from "next/router";
 
 export default function ProtectedLayout({
   children,
@@ -11,7 +12,10 @@ export default function ProtectedLayout({
   const { isAuthenticated, isChecking } = useAuthCheck();
 
   if (isChecking) return <LoadingScreen message="Verifying session..." />;
-  if (!isAuthenticated) return null;
+  if (!isAuthenticated) {
+  router.push("/login");
+  return null;
+}
 
   return <>{children}</>;
 }
