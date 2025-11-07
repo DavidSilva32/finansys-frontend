@@ -55,7 +55,9 @@
       "placeholder": "Monthly Cash Flow Chart will be displayed here."
     },
     "transactions": {
-      "title": "Recent Transactions (Mock)"
+      "title": "Transactions",
+      "loading": "Loading...",
+      "noTransactions": "No transactions found."
     },
     "modules": {
       "title": "Core Modules",

@@ -55,7 +55,9 @@
       "placeholder": "O gráfico de fluxo de caixa mensal será exibido aqui."
     },
     "transactions": {
-      "title": "Transações Recentes (Simulação)"
+      "title": "Transações",
+      "loading": "Carregando...",
+      "noTransactions": "Nenhuma transação encontrada."
     },
     "modules": {
       "title": "Módulos Principais",

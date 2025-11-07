@@ -16,6 +16,8 @@ import {
 import { useMemo } from "react";
 import { SummaryCard } from "@/components/dashboard/summaryCard";
 import { useI18n } from "@/context/I18nContext";
+import { useTransactions } from "@/hooks/useTransctions";
+import { decodeTokenPayload } from "@/lib/authUtils";
 
 interface ModuleButtonProps {
   icon: React.ElementType;
@@ -25,17 +27,19 @@ interface ModuleButtonProps {
 export default function Dashboard() {
   const { t } = useI18n();
 
-  const authToken =
+  const accessToken =
     typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
   const formattedToken = useMemo(() => {
-    return authToken ? authToken.substring(0, 15) + "..." : "N/A";
-  }, [authToken]);
+    return accessToken ? accessToken.substring(0, 15) + "..." : "N/A";
+  }, [accessToken]);
 
-  const mockData = {
-    totalRevenue: "R$ 52.300,00",
-    totalExpenses: "R$ 18.900,00",
-    currentBalance: "R$ 33.400,00",
-  };
+  const userId = accessToken ? decodeTokenPayload(accessToken)?.sub : null;
+  const { transactions, totalRevenue, totalExpenses, currentBalance, loading } =
+    useTransactions(userId);
+
+  const formattedRevenue = `R$ ${totalRevenue.toFixed(2)}`;
+  const formattedExpenses = `R$ ${totalExpenses.toFixed(2)}`;
+  const formattedBalance = `R$ ${currentBalance.toFixed(2)}`;
 
   return (
     <motion.div
@@ -80,7 +84,7 @@ export default function Dashboard() {
               {i === 0 && (
                 <SummaryCard
                   title={t("dashboard.revenue.title")}
-                  value={mockData.totalRevenue}
+                  value={formattedRevenue}
                   description={t("dashboard.revenue.description")}
                   icon={TrendingUp}
                   valueColor="text-green-500"
@@ -89,7 +93,7 @@ export default function Dashboard() {
               {i === 1 && (
                 <SummaryCard
                   title={t("dashboard.expenses.title")}
-                  value={mockData.totalExpenses}
+                  value={formattedExpenses}
                   description={t("dashboard.expenses.description")}
                   icon={TrendingDown}
                   valueColor="text-red-500"
@@ -98,14 +102,12 @@ export default function Dashboard() {
               {i === 2 && (
                 <SummaryCard
                   title={t("dashboard.balance.title")}
-                  value={mockData.currentBalance}
+                  value={formattedBalance}
                   description={t("dashboard.balance.description")}
                   icon={DollarSign}
                   valueColor={
                     parseFloat(
-                      mockData.currentBalance
-                        .replace(/[^\d,-]/g, "")
-                        .replace(",", ".")
+                      formattedBalance.replace(/[^\d,-]/g, "").replace(",", ".")
                     ) > 0
                       ? "text-primary"
                       : "text-red-500"
@@ -157,20 +159,28 @@ export default function Dashboard() {
               {t("dashboard.transactions.title")}
             </h3>
             <ul className="space-y-3 text-sm">
-              <li className="flex justify-between items-center text-green-500">
-                Service Sale <span className="font-semibold">+ R$ 500,00</span>
-              </li>
-              <li className="flex justify-between items-center text-red-500">
-                Office Rent <span className="font-semibold">- R$ 3.000,00</span>
-              </li>
-              <li className="flex justify-between items-center text-green-500">
-                Product Sale{" "}
-                <span className="font-semibold">+ R$ 1.200,00</span>
-              </li>
-              <li className="flex justify-between items-center text-red-500">
-                Utility Bill <span className="font-semibold">- R$ 450,00</span>
-              </li>
-              <li className="text-muted-foreground pt-2">... more ...</li>
+              {loading ? (
+                <li>{t("dashboard.transactions.loading")}</li>
+              ) : transactions.length === 0 ? (
+                <li className="text-muted-foreground italic">
+                  {t("dashboard.transactions.noTransactions")}
+                </li>
+              ) : (
+                transactions.slice(0, 5).map((tx) => (
+                  <li
+                    key={tx.id}
+                    className={`flex justify-between items-center ${
+                      tx.type === "INCOME" ? "text-green-500" : "text-red-500"
+                    }`}
+                  >
+                    {tx.description}{" "}
+                    <span className="font-semibold">
+                      {tx.type === "INCOME" ? "+" : "-"} R${" "}
+                      {parseFloat(tx.amount).toFixed(2)}
+                    </span>
+                  </li>
+                ))
+              )}
             </ul>
           </div>
         </motion.section>
