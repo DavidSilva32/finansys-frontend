@@ -15,7 +15,6 @@ export function useTransactions(userId: string) {
       try {
         const res = await fetch(`${ApiRoutes.TRANSACTIONS.LIST}?userId=${userId}`);
         const data: ApiResponse<Transaction[]> = await res.json();
-        console.log(data)
         setTransactions(data.payload || []);
       } catch (error: any) {
         toast.error(error.message)
