@@ -13,7 +13,7 @@ export default function PublicHeader() {
       <div className="max-w-7xl mx-auto flex items-center justify-between p-4">
         <h1
           onClick={() => router.push("/")}
-          className="text-xl font-bold text-primary cursor-pointer"
+          className="text-2xl font-semibold text-primary cursor-pointer"
         >
           FinanSys
         </h1>

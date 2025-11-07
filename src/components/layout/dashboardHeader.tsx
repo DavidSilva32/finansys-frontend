@@ -18,7 +18,7 @@ export default function DashboardHeader() {
       <div className="flex justify-between items-center px-6 py-3 w-full">
          <h1
           onClick={() => router.push("/")}
-          className="text-xl font-bold text-primary cursor-pointer"
+          className="text-2xl font-semibold text-primary cursor-pointer"
         >
           FinanSys
         </h1>
