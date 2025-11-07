@@ -67,5 +67,16 @@
     "footer": {
       "authStatus": "Auth Status"
     }
+  },
+  "transactions": {
+    "title": "Transactions",
+    "income": "Income",
+    "expenses": "Expenses",
+    "balance": "Balance",
+    "addIncome": "Add Income",
+    "addExpense": "Add Expense",
+    "listTitle": "Transaction List",
+    "loading": "Loading...",
+    "noTransactions": "No transactions found."
   }
 }

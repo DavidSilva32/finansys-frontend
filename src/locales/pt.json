@@ -67,5 +67,16 @@
     "footer": {
       "authStatus": "Status de Autenticação"
     }
+  },
+  "transactions": {
+    "title": "Transações",
+    "income": "Receitas",
+    "expenses": "Despesas",
+    "balance": "Saldo",
+    "addIncome": "Adicionar Receita",
+    "addExpense": "Adicionar Despesa",
+    "listTitle": "Lista de Transações",
+    "loading": "Carregando...",
+    "noTransactions": "Nenhuma transação encontrada."
   }
 }
