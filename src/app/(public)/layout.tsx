@@ -4,7 +4,7 @@ import { Toaster } from "@/components/ui/sonner";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <PublicHeader />
       <main className="flex-1 flex flex-col items-center justify-center">
         {children}

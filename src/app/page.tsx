@@ -17,9 +17,9 @@ export default function Home() {
   };
 
   return (
-    <main className="flex flex-col min-h-screen bg-linear-to-b from-background to-surface text-foreground font-sans">
+    <main className="flex flex-col min-h-screen bg-linear-to-b from-background to-surface text-foreground">
       <header className="flex justify-between items-center px-8 py-4 border-b border-border bg-surface/70 backdrop-blur">
-        <h1 className="text-2xl font-semibold text-primary">Finansys</h1>
+        <h1 className="text-2xl font-semibold text-primary">FinanSys</h1>
         <Button variant="outline" onClick={goToLogin}>
           {t("home.access")}
         </Button>
