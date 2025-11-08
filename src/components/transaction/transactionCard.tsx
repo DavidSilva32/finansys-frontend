@@ -21,6 +21,7 @@ import { useDeleteTransaction } from "@/hooks/useDeleteTransaction";
 import { Button } from "../ui/button";
 import TransactionForm from "./transactionForm";
 import { useI18n } from "@/context/I18nContext";
+import { handleToast } from "@/lib/toast";
 
 export const TransactionCard: React.FC<Transaction> = ({
   id,
@@ -45,7 +46,8 @@ export const TransactionCard: React.FC<Transaction> = ({
   }[status];
 
   const handleDelete = async () => {
-    await deleteTransaction(id);
+    const result = await deleteTransaction(id);
+    handleToast(result);
     setIsDeleteOpen(false);
   };
 

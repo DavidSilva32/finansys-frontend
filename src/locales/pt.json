@@ -76,6 +76,7 @@
     "income": "Receitas",
     "expenses": "Despesas",
     "balance": "Saldo",
+    "refresh": "Atualizar",
     "addIncome": "Adicionar Receita",
     "addExpense": "Adicionar Despesa",
     "listTitle": "Lista de Transações",

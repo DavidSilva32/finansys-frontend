@@ -76,6 +76,7 @@
     "income": "Income",
     "expenses": "Expenses",
     "balance": "Balance",
+    "refresh": "Refresh",
     "addIncome": "Add Income",
     "addExpense": "Add Expense",
     "listTitle": "Transaction List",

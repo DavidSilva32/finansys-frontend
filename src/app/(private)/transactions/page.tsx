@@ -7,13 +7,27 @@ import { TransactionCard } from "@/components/transaction/transactionCard";
 import { decodeTokenPayload } from "@/lib/authUtils";
 import { useI18n } from "@/context/I18nContext";
 import { QuickActions } from "@/components/transaction/quickActions";
+import { handleToast } from "@/lib/toast";
+import { Button } from "@/components/ui/button";
+import { Loader } from "lucide-react";
 
 export default function TransactionsPage() {
   const accessToken = localStorage.getItem("accessToken");
   const userId = accessToken ? decodeTokenPayload(accessToken)?.sub : null;
-  const { transactions, loading, totalRevenue, totalExpenses, currentBalance } =
-    useTransactions(userId);
+  const {
+    transactions,
+    loading,
+    totalRevenue,
+    totalExpenses,
+    currentBalance,
+    fetchTransactions,
+  } = useTransactions(userId);
   const { t } = useI18n();
+
+  async function handleRefresh() {
+    const result = await fetchTransactions();
+    handleToast(result);
+  }
 
   return (
     <motion.div
@@ -41,6 +55,20 @@ export default function TransactionsPage() {
           value={`R$ ${currentBalance.toFixed(2)}`}
           valueColor={currentBalance >= 0 ? "text-primary" : "text-red-500"}
         />
+
+        <div className="md:col-span-3 mt-2 hidden md:flex justify-end">
+          <Button
+            onClick={handleRefresh}
+            size="sm"
+            variant="default"
+            disabled={loading}
+          >
+            <Loader
+              className={`w-4 h-4 mr-2 ${loading ? "animate-spin" : ""}`}
+            />
+            {t("transactions.refresh")}
+          </Button>
+        </div>
       </motion.section>
 
       {/* Quick Actions with Modal */}

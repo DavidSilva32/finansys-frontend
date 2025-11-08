@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ApiResponse } from "@/types/apiResponse";
 import { CreateTransactionDTO, Transaction } from "@/types/transaction";
 import { ApiRoutes } from "@/enum/apiRoutes";
-import { toast } from "sonner";
 
 export function useCreateTransaction() {
   const [loading, setLoading] = useState(false);
@@ -24,12 +23,11 @@ export function useCreateTransaction() {
       if (!res.ok)
         throw new Error(result.message || "Failed to create transaction");
 
-      toast.success(result.message);
       setLoading(false);
-      return result.payload;
+      return {message: result.message, status: result.status};
     } catch (error: any) {
       setLoading(false);
-      toast.error(error.message);
+      return { message: error.message || "Erro ao atualizar transação", status: 500 };
     }
   };
 

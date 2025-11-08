@@ -2,7 +2,6 @@ import { useState } from "react";
 import { ApiResponse } from "@/types/apiResponse";
 import { Transaction, UpdateTransactionDTO } from "@/types/transaction";
 import { ApiRoutes } from "@/enum/apiRoutes";
-import { toast } from "sonner";
 
 export function useUpdateTransaction() {
   const [loading, setLoading] = useState(false);
@@ -10,7 +9,6 @@ export function useUpdateTransaction() {
   const updateTransaction = async (id: string, data: UpdateTransactionDTO) => {
     setLoading(true);
     try {
-        console.log(data)
       const res = await fetch(`${ApiRoutes.TRANSACTIONS.UPDATE(id)}`, {
         method: "PATCH",
         headers: {
@@ -24,12 +22,11 @@ export function useUpdateTransaction() {
       if (!res.ok)
         throw new Error(result.message || "Failed to create transaction");
 
-      toast.success(result.message);
       setLoading(false);
-      return result.payload;
+      return {message: result.message, status: result.status};
     } catch (error: any) {
       setLoading(false);
-      toast.error(error.message);
+      return { message: error.message || "Erro ao atualizar transação", status: 500 };
     }
   };
 

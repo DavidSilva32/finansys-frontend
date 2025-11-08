@@ -28,6 +28,8 @@ import {
   UpdateTransactionDTO,
 } from "@/types/transaction";
 import { useUpdateTransaction } from "@/hooks/useUpdateTransaction";
+import { toast } from "sonner";
+import { handleToast } from "@/lib/toast";
 
 const formSchema = z.object({
   type: z.enum(TransactionType),
@@ -83,10 +85,15 @@ export default function TransactionForm({
 
     if (transaction) {
       const payload: UpdateTransactionDTO = { ...basePayload };
-      await updateTransaction(transaction.id, payload);
+      const result = await updateTransaction(transaction.id, payload);
+
+      handleToast(result);
     } else {
       const payload: CreateTransactionDTO = { ...basePayload, userId };
-      await createTransaction(payload);
+      const result = await createTransaction(payload);
+
+      handleToast(result);
+
       form.reset({ ...form.getValues(), type: defaultType });
     }
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { ClientLanguageWrapper } from "@/components/clientLanguageWrapper";
+import { ClientToaster } from "@/components/layout/clienteToaster";
 
 export const metadata: Metadata = {
   title: "FinanSys",
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en">
       <body className="antialiased">
         <ClientLanguageWrapper>{children}</ClientLanguageWrapper>
+        <ClientToaster />
       </body>
     </html>
   );

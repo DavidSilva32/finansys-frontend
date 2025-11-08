@@ -26,6 +26,11 @@ export interface SummaryCardProps {
   valueColor?: string;
 }
 
+export interface FetchResult {
+  message: string;
+  status: number;
+}
+
 export interface CreateTransactionDTO extends Omit<Transaction, "id"> {}
 
 export type UpdateTransactionDTO = Partial<Omit<Transaction, "id" | "userId">>;

@@ -5,7 +5,6 @@ import { ApiRoutes } from "@/enum/apiRoutes";
 import { ApiResponse } from "@/types/apiResponse";
 import { Transaction } from "@/types/transaction";
 import { useState } from "react";
-import { toast } from "sonner";
 
 export function useDeleteTransaction() {
   const [loading, setLoading] = useState(false);
@@ -24,11 +23,10 @@ export function useDeleteTransaction() {
 
       if (!response.ok) throw new Error(result.message);
 
-      toast.success(result.message);
+      return {message: result.message, status: result.status};
     } catch (error: any) {
-      toast.error(error.message);
-    } finally {
       setLoading(false);
+      return { message: error.message || "Erro ao deletar transação", status: 500 };
     }
   };
 

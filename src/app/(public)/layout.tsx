@@ -1,6 +1,4 @@
-"use client";
 import PublicHeader from "@/components/layout/publicHeader";
-import { Toaster } from "@/components/ui/sonner";
 
 export default function PublicLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -9,7 +7,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
       <main className="flex-1 flex flex-col items-center justify-center">
         {children}
       </main>
-      <Toaster richColors position="top-right" />
     </div>
   );
 }
