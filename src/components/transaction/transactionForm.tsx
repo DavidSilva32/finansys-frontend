@@ -238,7 +238,7 @@ export default function TransactionForm({
         <Button
           type="submit"
           disabled={creating || updating}
-          className="w-full"
+          className="w-full cursor-pointer"
         >
           {creating || updating
             ? t("transactions.form.saving")

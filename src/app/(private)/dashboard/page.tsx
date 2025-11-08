@@ -214,6 +214,7 @@ export default function Dashboard() {
             </ul>
             <div className="mt-2 flex justify-end">
               <Button
+                className="cursor-pointer"
                 size="sm"
                 variant="outline"
                 onClick={() => router.push("/transactions")}

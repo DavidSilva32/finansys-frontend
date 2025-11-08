@@ -20,7 +20,7 @@ export default function Home() {
     <main className="flex flex-col min-h-screen bg-linear-to-b from-background to-surface text-foreground">
       <header className="flex justify-between items-center px-8 py-4 border-b border-border bg-surface/70 backdrop-blur">
         <h1 className="text-2xl font-semibold text-primary">FinanSys</h1>
-        <Button variant="outline" onClick={goToLogin}>
+        <Button className="cursor-pointer" variant="outline" onClick={goToLogin}>
           {t("home.access")}
         </Button>
       </header>
@@ -82,7 +82,7 @@ export default function Home() {
           size="lg"
           onClick={goToLogin}
           disabled={isChecking}
-          className="px-8 py-4 text-lg"
+          className="px-8 py-4 text-lg cursor-pointer"
         >
           {isChecking ? t("home.loading") : t("home.access")}
         </Button>

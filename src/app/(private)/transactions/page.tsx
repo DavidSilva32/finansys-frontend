@@ -80,6 +80,7 @@ export default function TransactionsPage() {
 
         <div className="hidden md:flex">
           <Button
+            className="cursor-pointer"
             onClick={handleRefresh}
             size="sm"
             variant="default"

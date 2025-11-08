@@ -27,7 +27,7 @@ export default function PrivateHeader() {
           <Button
             onClick={handleLogout}
             variant="outline"
-            className="text-sm h-8 px-3 shrink-0"
+            className="text-sm h-8 px-3 shrink-0 cursor-pointer"
           >
             <LogOut className="h-4 w-4" />
             <span className="hidden sm:inline ml-1">Logout</span>

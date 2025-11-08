@@ -2,12 +2,18 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { TransactionType } from "@/enum/transationEnums";
 import { Plus, Minus } from "lucide-react";
 import { useI18n } from "@/context/I18nContext";
-import { QuickActionButton } from "../dashboard/quickActionButton";
 import TransactionForm from "./transactionForm";
+import { Button } from "../ui/button";
 
 interface QuickActionsProps {
   userId: string;
@@ -19,16 +25,14 @@ export function QuickActions({ userId }: QuickActionsProps) {
   const [isExpenseOpen, setIsExpenseOpen] = useState(false);
 
   return (
-    <motion.section
-      className="flex flex-col sm:flex-row gap-4"
-    >
+    <motion.section className="flex flex-col sm:flex-row gap-4">
       {/* Income Modal */}
       <Dialog open={isIncomeOpen} onOpenChange={setIsIncomeOpen}>
         <DialogTrigger asChild>
-          <QuickActionButton
-            title={t("transactions.addIncome")}
-            icon={Plus}
-          />
+          <Button className="w-full sm:w-auto cursor-pointer">
+            <Plus className="h-4 w-4" />
+            {t("transactions.addIncome")}
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
@@ -45,11 +49,10 @@ export function QuickActions({ userId }: QuickActionsProps) {
       {/* Expense Modal */}
       <Dialog open={isExpenseOpen} onOpenChange={setIsExpenseOpen}>
         <DialogTrigger asChild>
-          <QuickActionButton
-            title={t("transactions.addExpense")}
-            icon={Minus}
-            variant="secondary"
-          />
+          <Button variant="secondary" className="w-full sm:w-auto cursor-pointer">
+            <Minus className="h-4 w-4" />
+            {t("transactions.addExpense")}
+          </Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
