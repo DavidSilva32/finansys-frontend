@@ -147,8 +147,8 @@ export const TransactionCard: React.FC<Transaction> = ({
       {/* Modal de edição */}
       {isEditOpen && (
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
-          <DialogContent>
-            <DialogTitle className="sr-only">
+          <DialogContent className="sm:max-w-[500px]">
+            <DialogTitle>
               {t("transactions.card.edit")}
             </DialogTitle>
             <TransactionForm
