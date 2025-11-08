@@ -1,23 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { QuickActionButton } from "@/components/dashboard/quickActionButton";
-import { Plus, Minus } from "lucide-react";
 import { useTransactions } from "@/hooks/useTransctions";
 import { TransactionSummaryCard } from "@/components/transaction/transactionSummaryCard";
 import { TransactionCard } from "@/components/transaction/transactionCard";
 import { decodeTokenPayload } from "@/lib/authUtils";
 import { useI18n } from "@/context/I18nContext";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { useState } from "react";
-import TransactionForm from "@/components/transaction/transactionForm";
-import { TransactionType } from "@/enum/transationEnums";
 import { QuickActions } from "@/components/transaction/quickActions";
 
 export default function TransactionsPage() {
