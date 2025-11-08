@@ -8,6 +8,17 @@ import { TransactionSummaryCard } from "@/components/transaction/transactionSumm
 import { TransactionCard } from "@/components/transaction/transactionCard";
 import { decodeTokenPayload } from "@/lib/authUtils";
 import { useI18n } from "@/context/I18nContext";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import TransactionForm from "@/components/transaction/transactionForm";
+import { TransactionType } from "@/enum/transationEnums";
+import { QuickActions } from "@/components/transaction/quickActions";
 
 export default function TransactionsPage() {
   const accessToken = localStorage.getItem("accessToken");
@@ -15,6 +26,8 @@ export default function TransactionsPage() {
   const { transactions, loading, totalRevenue, totalExpenses, currentBalance } =
     useTransactions(userId);
   const { t } = useI18n();
+  const [isIncomeOpen, setIsIncomeOpen] = useState(false);
+  const [isExpenseOpen, setIsExpenseOpen] = useState(false);
 
   return (
     <motion.div
@@ -44,15 +57,8 @@ export default function TransactionsPage() {
         />
       </motion.section>
 
-      {/* Quick Actions */}
-      <motion.section className="flex flex-col sm:flex-row gap-4 mb-6">
-        <QuickActionButton title={t("transactions.addIncome")} icon={Plus} />
-        <QuickActionButton
-          title={t("transactions.addExpense")}
-          icon={Minus}
-          variant="secondary"
-        />
-      </motion.section>
+      {/* Quick Actions with Modal */}
+      <QuickActions userId={userId} />
 
       {/* Transaction List */}
       <motion.section className="bg-card p-6 rounded-xl shadow-lg border border-border">

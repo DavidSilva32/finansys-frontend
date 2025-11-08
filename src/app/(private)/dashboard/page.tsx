@@ -19,6 +19,7 @@ import { useI18n } from "@/context/I18nContext";
 import { useTransactions } from "@/hooks/useTransctions";
 import { decodeTokenPayload } from "@/lib/authUtils";
 import {useRouter} from "next/navigation";
+import { QuickActions } from "@/components/transaction/quickActions";
 
 interface ModuleButtonProps {
   icon: React.ElementType;
@@ -121,23 +122,7 @@ export default function Dashboard() {
         </motion.section>
 
         {/* Quick Actions */}
-        <motion.section
-          aria-labelledby="quick-actions-heading"
-          className="flex flex-col sm:flex-row gap-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.4, ease: "easeOut" }}
-        >
-          <QuickActionButton
-            title={t("dashboard.actions.addRevenue")}
-            icon={Plus}
-          />
-          <QuickActionButton
-            title={t("dashboard.actions.addExpense")}
-            variant="secondary"
-            icon={Minus}
-          />
-        </motion.section>
+        <QuickActions userId={userId} />
 
         {/* Data sections */}
         <motion.section
@@ -178,7 +163,7 @@ export default function Dashboard() {
                     {tx.description}{" "}
                     <span className="font-semibold">
                       {tx.type === "INCOME" ? "+" : "-"} R${" "}
-                      {parseFloat(tx.amount).toFixed(2)}
+                      {tx.amount.toFixed(2)}
                     </span>
                   </li>
                 ))
@@ -244,7 +229,7 @@ export default function Dashboard() {
 }
 
 const ModuleButton: React.FC<ModuleButtonProps> = ({ icon: Icon, title }) => {
-  const MotionButton = motion(Button);
+  const MotionButton = motion.create(Button);
 
   return (
     <MotionButton

@@ -1,20 +1,21 @@
-import { TransactionType } from "@/enum/transationType";
+import { TransactionStatus, TransactionType } from "@/enum/transationEnums";
 
 export interface Transaction {
   id: string;
   type: TransactionType;
   category: string;
   description?: string;
-  amount: string;
+  amount: number;
   date: string;
-  status: string;
+  status: TransactionStatus;
+  userId: string
 }
 
 export interface TransactionCardProps {
   type: TransactionType;
   category: string;
   description?: string;
-  amount: string;
+  amount: number;
   date: string;
 }
 
