@@ -33,7 +33,7 @@
     "loginLink": "Log In"
   },
   "dashboard": {
-    "title": "Dashboard Summary",
+    "title": "Dashboard",
     "revenue": {
       "title": "Total Revenue",
       "description": "vs last month"
@@ -51,8 +51,8 @@
       "addExpense": "Record New Expense"
     },
     "cashflow": {
-      "title": "Cash Flow Overview (Placeholder)",
-      "placeholder": "Monthly Cash Flow Chart will be displayed here."
+      "title": "Cash Flow Overview",
+      "noData": "Monthly Cash Flow Chart will be displayed here."
     },
     "transactions": {
       "title": "Transactions",

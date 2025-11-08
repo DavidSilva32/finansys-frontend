@@ -33,7 +33,7 @@
     "loginLink": "Entrar"
   },
   "dashboard": {
-    "title": "Resumo do Painel",
+    "title": "Painel",
     "revenue": {
       "title": "Receita Total",
       "description": "em relação ao mês passado"
@@ -51,8 +51,8 @@
       "addExpense": "Registrar Despesa"
     },
     "cashflow": {
-      "title": "Visão Geral do Fluxo de Caixa (Simulação)",
-      "placeholder": "O gráfico de fluxo de caixa mensal será exibido aqui."
+      "title": "Visão Geral do Fluxo de Caixa",
+      "noData": "O gráfico de fluxo de caixa mensal será exibido aqui."
     },
     "transactions": {
       "title": "Transações",
