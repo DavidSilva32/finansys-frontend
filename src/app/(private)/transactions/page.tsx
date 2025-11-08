@@ -30,7 +30,7 @@ export default function TransactionsPage() {
   }
 
   return (
-    <motion.div
+    <motion.main
       className="bg-background min-h-screen p-4 md:p-6 lg:p-8"
       initial={{ opacity: 0, scale: 0.98 }}
       animate={{ opacity: 1, scale: 1 }}
@@ -38,8 +38,13 @@ export default function TransactionsPage() {
     >
       <h2 className="text-3xl font-bold mb-6">{t("transactions.title")}</h2>
 
-      {/* Summary */}
-      <motion.section className="grid gap-4 md:grid-cols-3 mb-4">
+      {/* Summary Section */}
+      <motion.section
+        className="grid gap-4 md:grid-cols-3 mb-4"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <TransactionSummaryCard
           title={t("transactions.income")}
           value={`R$ ${totalRevenue.toFixed(2)}`}
@@ -57,9 +62,21 @@ export default function TransactionsPage() {
         />
       </motion.section>
 
-      {/* Quick Actions + Refresh Button */}
-      <div className="flex justify-between items-center mb-6">
-        <QuickActions userId={userId} />
+      {/* Quick Actions Section */}
+      <motion.section
+        className="flex flex-col md:flex-row justify-between items-center mb-6 w-full"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
+        <motion.div
+          className="w-full md:w-auto"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <QuickActions userId={userId} />
+        </motion.div>
 
         <div className="hidden md:flex">
           <Button
@@ -74,12 +91,19 @@ export default function TransactionsPage() {
             {t("transactions.refresh")}
           </Button>
         </div>
-      </div>
-      {/* Transaction List */}
-      <motion.section className="bg-card p-6 rounded-xl shadow-lg border border-border">
+      </motion.section>
+
+      {/* Transaction List Section */}
+      <motion.section
+        className="bg-card p-6 rounded-xl shadow-lg border border-border"
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+      >
         <h3 className="text-lg font-semibold text-card-foreground mb-4">
           {t("transactions.listTitle")}
         </h3>
+
         {loading ? (
           <p>{t("transactions.loading")}</p>
         ) : transactions.length === 0 ? (
@@ -87,13 +111,21 @@ export default function TransactionsPage() {
             {t("transactions.noTransactions")}
           </p>
         ) : (
-          <motion.ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.ul
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial="hidden"
+            animate="visible"
+            variants={{
+              hidden: {},
+              visible: { transition: { staggerChildren: 0.05 } },
+            }}
+          >
             {transactions.map((tx) => (
               <TransactionCard key={tx.id} {...tx} />
             ))}
           </motion.ul>
         )}
       </motion.section>
-    </motion.div>
+    </motion.main>
   );
 }
