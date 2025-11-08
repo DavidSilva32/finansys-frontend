@@ -31,6 +31,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
+import { formatLocalizedDate } from "@/lib/date";
 
 export const TransactionCard: React.FC<Transaction> = ({
   id,
@@ -45,7 +46,7 @@ export const TransactionCard: React.FC<Transaction> = ({
   const [isDeleteOpen, setIsDeleteOpen] = React.useState(false);
   const [isEditOpen, setIsEditOpen] = React.useState(false);
   const { deleteTransaction, loading } = useDeleteTransaction();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
   const isIncome = type === "INCOME";
 
   const statusColor = {
@@ -96,7 +97,7 @@ export const TransactionCard: React.FC<Transaction> = ({
           <CardContent className="flex flex-col gap-1">
             {description && <CardDescription>{description}</CardDescription>}
             <p className="text-xs text-muted-foreground">
-              {new Date(date).toLocaleDateString()}
+              {formatLocalizedDate(date, locale)}
             </p>
             <span
               className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor} w-auto max-w-max`}

@@ -30,6 +30,9 @@ import {
 import { useUpdateTransaction } from "@/hooks/useUpdateTransaction";
 import { handleToast } from "@/lib/toast";
 import { useI18n } from "@/context/I18nContext";
+import { formatLocalizedDate } from "@/lib/date";
+import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import { Calendar } from "../ui/calendar";
 
 const formSchema = z.object({
   type: z.enum(TransactionType),
@@ -58,7 +61,7 @@ export default function TransactionForm({
 }: TransactionFormProps) {
   const { createTransaction, loading: creating } = useCreateTransaction();
   const { updateTransaction, loading: updating } = useUpdateTransaction();
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as any,
@@ -192,18 +195,34 @@ export default function TransactionForm({
 
         {/* Data */}
         <FormField
-          control={form.control}
-          name="date"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>{t("transactions.form.dateLabel")}</FormLabel>
-              <FormControl>
-                <Input type="date" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+  control={form.control}
+  name="date"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>{t("transactions.form.dateLabel")}</FormLabel>
+      <FormControl>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Input
+              placeholder="Escolha a data"
+              value={field.value ? formatLocalizedDate(field.value, locale) : ""}
+              readOnly
+            />
+          </PopoverTrigger>
+          <PopoverContent>
+            <Calendar
+              mode="single"
+              selected={field.value ? new Date(field.value) : undefined}
+              onSelect={(date) => field.onChange(date?.toISOString())}
+            />
+          </PopoverContent>
+        </Popover>
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
 
         {/* Status */}
         <FormField
