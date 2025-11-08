@@ -22,6 +22,15 @@ import { Button } from "../ui/button";
 import TransactionForm from "./transactionForm";
 import { useI18n } from "@/context/I18nContext";
 import { handleToast } from "@/lib/toast";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "../ui/card";
 
 export const TransactionCard: React.FC<Transaction> = ({
   id,
@@ -54,64 +63,60 @@ export const TransactionCard: React.FC<Transaction> = ({
   return (
     <>
       <motion.li
-        className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-xl shadow border
-        ${
-          isIncome ? "border-green-300" : "border-red-300"
-        } w-full bg-background`}
+        className="w-full"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
-        {/* Conteúdo principal */}
-        <div className="flex flex-col sm:flex-1 gap-1 min-w-0">
-          <p className="font-medium text-sm sm:text-base">{category}</p>
-          {description && (
-            <p className="text-xs sm:text-sm text-muted-foreground truncate">
-              {description}
+        <Card className={`${isIncome ? "border-green-300" : "border-red-300"}`}>
+          <CardHeader>
+            <CardTitle>{category}</CardTitle>
+            <CardAction>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
+                    <MoreHorizontal className="size-5" />
+                  </button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onSelect={() => setIsEditOpen(true)}>
+                    <Edit className="size-4 mr-2" />{" "}
+                    {t("transactions.card.edit")}
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)}>
+                    <Trash className="size-4 mr-2" />{" "}
+                    {t("transactions.card.remove")}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </CardAction>
+          </CardHeader>
+
+          <CardContent className="flex flex-col gap-1">
+            {description && <CardDescription>{description}</CardDescription>}
+            <p className="text-xs text-muted-foreground">
+              {new Date(date).toLocaleDateString()}
             </p>
-          )}
-          <p className="text-xs text-muted-foreground">
-            {new Date(date).toLocaleDateString()}
-          </p>
+            <span
+              className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor} w-auto max-w-max`}
+            >
+              {t(`transactions.status.${status.toLowerCase()}`)}
+            </span>
+          </CardContent>
 
-          <span
-            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor} w-auto max-w-max`}
-          >
-            {t(`transactions.status.${status.toLowerCase()}`)}
-          </span>
-        </div>
-
-        {/* Valor + Ações */}
-        <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto">
-          <span
-            className={
-              isIncome
-                ? "text-green-500 font-semibold"
-                : "text-red-500 font-semibold"
-            }
-          >
-            {isIncome ? `+ ${amount}` : `- ${amount}`}
-          </span>
-
-          {/* Dropdown de ações */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700">
-                <MoreHorizontal className="size-5" />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onSelect={() => setIsEditOpen(true)}>
-                <Edit className="size-4 mr-2" /> {t("transactions.card.edit")}
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)}>
-                <Trash className="size-4 mr-2" />{" "}
-                {t("transactions.card.remove")}
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
+          <CardFooter className="justify-between">
+            <span
+              className={
+                isIncome
+                  ? "text-green-500 font-semibold"
+                  : "text-red-500 font-semibold"
+              }
+            >
+              {isIncome ? `+ ${amount}` : `- ${amount}`}
+            </span>
+          </CardFooter>
+        </Card>
       </motion.li>
 
       {/* Modal de confirmação */}

@@ -87,11 +87,11 @@ export default function TransactionsPage() {
             {t("transactions.noTransactions")}
           </p>
         ) : (
-          <ul className="space-y-3">
+          <motion.ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {transactions.map((tx) => (
               <TransactionCard key={tx.id} {...tx} />
             ))}
-          </ul>
+          </motion.ul>
         )}
       </motion.section>
     </motion.div>
