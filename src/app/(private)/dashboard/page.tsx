@@ -131,8 +131,7 @@ export default function Dashboard() {
         <motion.section className="grid gap-6 lg:grid-cols-3" {...motionProps}>
           {/* Cash Flow */}
           <motion.section
-            className="bg-card p-6 rounded-xl shadow-lg border border-border lg:col-span-2 flex flex-col
-                h-96 md:h-112 lg:h-128 max-h-160"
+            className="bg-card p-6 rounded-xl shadow-lg border border-border lg:col-span-2 flex flex-col w-full min-w-0"
             aria-label="Cash Flow Overview"
             {...motionProps}
           >
@@ -152,7 +151,7 @@ export default function Dashboard() {
                   income: { label: "Income", color: "#22c55e" },
                   expense: { label: "Expense", color: "#ef4444" },
                 }}
-                className="flex-1 w-full h-full"
+                className="flex-1 w-full h-full min-h-[250px] sm:min-h-[300px] md:min-h-[350px] lg:min-h-[400px]min-w-[260px]"
               >
                 <AreaChart
                   data={chartData}
@@ -183,7 +182,7 @@ export default function Dashboard() {
 
           {/* Recent Transactions */}
           <motion.aside
-            className="bg-card p-6 rounded-xl shadow-lg border border-border h-96 md:h-112 lg:h-128 flex flex-col"
+            className="bg-card p-6 rounded-xl shadow-lg border border-border flex flex-col w-full min-w-0"
             aria-label="Recent Transactions"
             {...motionProps}
           >
