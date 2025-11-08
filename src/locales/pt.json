@@ -97,6 +97,26 @@
       "removeConfirm": "Remover",
       "updated": "Transação atualizada com sucesso",
       "created": "Transação criada com sucesso"
+    },
+    "form": {
+    "newTitle": "Nova Transação",
+    "editTitle": "Editar Transação",
+    "typeLabel": "Tipo",
+    "typePlaceholder": "Selecione o tipo",
+    "typeIncome": "Entrada",
+    "typeExpense": "Saída",
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "Ex: Alimentação, Salário...",
+    "descriptionLabel": "Descrição",
+    "descriptionPlaceholder": "Opcional",
+    "amountLabel": "Valor",
+    "amountPlaceholder": "0,00",
+    "dateLabel": "Data",
+    "statusLabel": "Status",
+    "statusPlaceholder": "Selecione o status",
+    "saving": "Salvando...",
+    "saveChanges": "Salvar Alterações",
+    "createTransaction": "Criar Transação"
     }
   }
 }

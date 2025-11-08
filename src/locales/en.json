@@ -72,31 +72,51 @@
     }
   },
   "transactions": {
-    "title": "Transactions",
-    "income": "Income",
-    "expenses": "Expenses",
-    "balance": "Balance",
-    "refresh": "Refresh",
-    "addIncome": "Add Income",
-    "addExpense": "Add Expense",
-    "listTitle": "Transaction List",
-    "loading": "Loading...",
-    "noTransactions": "No transactions found.",
-    "status": {
-      "pending": "Pending",
-      "completed": "Completed",
-      "cancelled": "Cancelled"
+  "title": "Transactions",
+  "income": "Income",
+  "expenses": "Expenses",
+  "balance": "Balance",
+  "refresh": "Refresh",
+  "addIncome": "Add Income",
+  "addExpense": "Add Expense",
+  "listTitle": "Transaction List",
+  "loading": "Loading...",
+  "noTransactions": "No transactions found.",
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
     },
-    "card": {
-      "edit": "Edit",
-      "remove": "Remove",
-      "confirmRemoveTitle": "Confirm deletion",
-      "confirmRemoveText": "Are you sure you want to remove this transaction?",
-      "cancel": "Cancel",
-      "removing": "Removing...",
-      "removeConfirm": "Remove",
-      "updated": "Transaction updated successfully",
-      "created": "Transaction created successfully"
+  "card": {
+    "edit": "Edit",
+    "remove": "Remove",
+    "confirmRemoveTitle": "Confirm deletion",
+    "confirmRemoveText": "Are you sure you want to remove this transaction?",
+    "cancel": "Cancel",
+    "removing": "Removing...",
+    "removeConfirm": "Remove",
+    "updated": "Transaction updated successfully",
+    "created": "Transaction created successfully"
+    },
+  "form": {
+    "newTitle": "New Transaction",
+    "editTitle": "Edit Transaction",
+    "typeLabel": "Type",
+    "typePlaceholder": "Select the type",
+    "typeIncome": "Income",
+    "typeExpense": "Expense",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Ex: Food, Salary...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional",
+    "amountLabel": "Amount",
+    "amountPlaceholder": "0.00",
+    "dateLabel": "Date",
+    "statusLabel": "Status",
+    "statusPlaceholder": "Select the status",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "createTransaction": "Create Transaction"
     }
   }
 }

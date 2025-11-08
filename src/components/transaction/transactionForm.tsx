@@ -28,8 +28,8 @@ import {
   UpdateTransactionDTO,
 } from "@/types/transaction";
 import { useUpdateTransaction } from "@/hooks/useUpdateTransaction";
-import { toast } from "sonner";
 import { handleToast } from "@/lib/toast";
+import { useI18n } from "@/context/I18nContext";
 
 const formSchema = z.object({
   type: z.enum(TransactionType),
@@ -58,6 +58,7 @@ export default function TransactionForm({
 }: TransactionFormProps) {
   const { createTransaction, loading: creating } = useCreateTransaction();
   const { updateTransaction, loading: updating } = useUpdateTransaction();
+  const { t } = useI18n();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema) as any,
@@ -86,14 +87,11 @@ export default function TransactionForm({
     if (transaction) {
       const payload: UpdateTransactionDTO = { ...basePayload };
       const result = await updateTransaction(transaction.id, payload);
-
       handleToast(result);
     } else {
       const payload: CreateTransactionDTO = { ...basePayload, userId };
       const result = await createTransaction(payload);
-
       handleToast(result);
-
       form.reset({ ...form.getValues(), type: defaultType });
     }
 
@@ -107,7 +105,9 @@ export default function TransactionForm({
         className="space-y-4 bg-card p-6 rounded-xl shadow-md border border-border"
       >
         <h2 className="text-lg font-semibold text-center mb-4">
-          {transaction ? "Editar Transação" : "Nova Transação"}
+          {transaction
+            ? t("transactions.form.editTitle")
+            : t("transactions.form.newTitle")}
         </h2>
 
         {/* Tipo */}
@@ -116,18 +116,18 @@ export default function TransactionForm({
           name="type"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Tipo</FormLabel>
+              <FormLabel>{t("transactions.form.typeLabel")}</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o tipo" />
+                    <SelectValue placeholder={t("transactions.form.typePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={TransactionType.INCOME}>
-                      Entrada
+                      {t("transactions.form.typeIncome")}
                     </SelectItem>
                     <SelectItem value={TransactionType.EXPENSE}>
-                      Saída
+                      {t("transactions.form.typeExpense")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -143,9 +143,12 @@ export default function TransactionForm({
           name="category"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Categoria</FormLabel>
+              <FormLabel>{t("transactions.form.categoryLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder="Ex: Alimentação, Salário..." {...field} />
+                <Input
+                  placeholder={t("transactions.form.categoryPlaceholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -158,9 +161,9 @@ export default function TransactionForm({
           name="description"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Descrição</FormLabel>
+              <FormLabel>{t("transactions.form.descriptionLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder="Opcional" {...field} />
+                <Input placeholder={t("transactions.form.descriptionPlaceholder")} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -173,12 +176,12 @@ export default function TransactionForm({
           name="amount"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Valor</FormLabel>
+              <FormLabel>{t("transactions.form.amountLabel")}</FormLabel>
               <FormControl>
                 <Input
                   type="number"
                   step="0.01"
-                  placeholder="0,00"
+                  placeholder={t("transactions.form.amountPlaceholder")}
                   {...field}
                 />
               </FormControl>
@@ -193,7 +196,7 @@ export default function TransactionForm({
           name="date"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Data</FormLabel>
+              <FormLabel>{t("transactions.form.dateLabel")}</FormLabel>
               <FormControl>
                 <Input type="date" {...field} />
               </FormControl>
@@ -208,21 +211,21 @@ export default function TransactionForm({
           name="status"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Status</FormLabel>
+              <FormLabel>{t("transactions.form.statusLabel")}</FormLabel>
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
-                    <SelectValue placeholder="Selecione o status" />
+                    <SelectValue placeholder={t("transactions.form.statusPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={TransactionStatus.PENDING}>
-                      Pendente
+                      {t("transactions.status.pending")}
                     </SelectItem>
                     <SelectItem value={TransactionStatus.COMPLETED}>
-                      Concluída
+                      {t("transactions.status.completed")}
                     </SelectItem>
                     <SelectItem value={TransactionStatus.CANCELLED}>
-                      Cancelada
+                      {t("transactions.status.cancelled")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -238,10 +241,10 @@ export default function TransactionForm({
           className="w-full"
         >
           {creating || updating
-            ? "Salvando..."
+            ? t("transactions.form.saving")
             : transaction
-            ? "Salvar Alterações"
-            : "Criar Transação"}
+            ? t("transactions.form.saveChanges")
+            : t("transactions.form.createTransaction")}
         </Button>
       </form>
     </Form>
