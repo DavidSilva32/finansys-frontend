@@ -26,8 +26,6 @@ export default function TransactionsPage() {
   const { transactions, loading, totalRevenue, totalExpenses, currentBalance } =
     useTransactions(userId);
   const { t } = useI18n();
-  const [isIncomeOpen, setIsIncomeOpen] = useState(false);
-  const [isExpenseOpen, setIsExpenseOpen] = useState(false);
 
   return (
     <motion.div
