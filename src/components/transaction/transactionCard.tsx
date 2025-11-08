@@ -54,30 +54,35 @@ export const TransactionCard: React.FC<Transaction> = ({
   return (
     <>
       <motion.li
-        className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-lg shadow-sm border
-        ${isIncome ? "border-green-300" : "border-red-300"} w-full`}
+        className={`flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 rounded-xl shadow border
+        ${
+          isIncome ? "border-green-300" : "border-red-300"
+        } w-full bg-background`}
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
       >
         {/* Conteúdo principal */}
-        <div className="flex flex-col sm:flex-1 gap-1">
-          <p className="font-medium">{category}</p>
+        <div className="flex flex-col sm:flex-1 gap-1 min-w-0">
+          <p className="font-medium text-sm sm:text-base">{category}</p>
           {description && (
-            <p className="text-sm text-muted-foreground">{description}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground truncate">
+              {description}
+            </p>
           )}
           <p className="text-xs text-muted-foreground">
             {new Date(date).toLocaleDateString()}
           </p>
+
           <span
-            className={`inline-block px-2 py-0.5 rounded text-xs font-semibold ${statusColor}`}
+            className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold ${statusColor} w-auto max-w-max`}
           >
             {t(`transactions.status.${status.toLowerCase()}`)}
           </span>
         </div>
 
         {/* Valor + Ações */}
-        <div className="flex items-center gap-2 mt-2 sm:mt-0">
+        <div className="flex items-center gap-2 mt-2 sm:mt-0 ml-auto">
           <span
             className={
               isIncome
@@ -101,7 +106,8 @@ export const TransactionCard: React.FC<Transaction> = ({
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)}>
-                <Trash className="size-4 mr-2" /> {t("transactions.card.remove")}
+                <Trash className="size-4 mr-2" />{" "}
+                {t("transactions.card.remove")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -112,7 +118,9 @@ export const TransactionCard: React.FC<Transaction> = ({
       {isDeleteOpen && (
         <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
           <DialogContent>
-            <DialogTitle>{t("transactions.card.confirmRemoveTitle")}</DialogTitle>
+            <DialogTitle>
+              {t("transactions.card.confirmRemoveTitle")}
+            </DialogTitle>
             <p>{t("transactions.card.confirmRemoveText")}</p>
             <DialogFooter>
               <Button
