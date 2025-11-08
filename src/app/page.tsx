@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 export default function Home() {
   const router = useRouter();
   const { t } = useI18n();
-  const { isAuthenticated, isChecking } = useAuthCheck(false);
+  const { isAuthenticated, isChecking } = useAuthCheck({redirectOnFail: false, timeoutMs: 5000});
 
   const goToLogin = () => {
     if (isChecking) return;

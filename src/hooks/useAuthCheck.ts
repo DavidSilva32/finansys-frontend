@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { decodeTokenPayload, isTokenExpired } from "@/lib/authUtils";
 import { ApiRoutes } from "@/enum/apiRoutes";
-import { toast } from "sonner";
 import { ApiResponse, RefreshResponse } from "@/types/apiResponse";
 
-export const useAuthCheck = (redirectOnFail: boolean = true) => {
+interface AuthCheckOptions {
+  redirectOnFail?: boolean;
+  timeoutMs?: number;
+}
+
+export const useAuthCheck = ({
+  redirectOnFail = true,
+  timeoutMs,
+}: AuthCheckOptions = {}) => {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isChecking, setIsChecking] = useState(true);
@@ -22,42 +29,61 @@ export const useAuthCheck = (redirectOnFail: boolean = true) => {
 
     if (!accessToken && !refreshToken) {
       setIsAuthenticated(false);
+      setIsChecking(false);
       if (redirectOnFail) router.push("/login");
+      return;
+    }
+
+    if (!isTokenExpired(accessToken)) {
+      setIsAuthenticated(true);
       setIsChecking(false);
       return;
     }
 
-    if (isTokenExpired(accessToken)) {
-      fetch(`${ApiRoutes.AUTH.REFRESH}`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId, refreshToken }),
-      })
-        .then(async (res) => {
-          const data: ApiResponse<RefreshResponse> = await res.json();
+    const controller = new AbortController();
+    let timeoutId: NodeJS.Timeout | null = null;
 
-          if (!res.ok || !data.payload)
-            throw new Error(data.message || "Session expired");
-
-          localStorage.setItem("accessToken", data.payload.tokens.accessToken);
-          localStorage.setItem("refreshToken", data.payload.tokens.refreshToken);
-          setIsAuthenticated(true);
-        })
-        .catch((error: any) => {
-          toast.error(error?.message || "Session expired");
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          setIsAuthenticated(false);
-          if (redirectOnFail) router.push("/login");
-        })
-        .finally(() => setIsChecking(false));
-    } else {
-      setIsAuthenticated(true);
-      setIsChecking(false);
+    if (timeoutMs) {
+      timeoutId = setTimeout(() => {
+        controller.abort();
+        setIsChecking(false);
+        setIsAuthenticated(false);
+      }, timeoutMs);
     }
-  }, [router, redirectOnFail]);
+
+    fetch(`${ApiRoutes.AUTH.REFRESH}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, refreshToken }),
+      signal: controller.signal,
+    })
+      .then(async (res) => {
+        const data: ApiResponse<RefreshResponse> = await res.json();
+        if (!res.ok || !data.payload) throw new Error(data.message || "Session expired");
+
+        localStorage.setItem("accessToken", data.payload.tokens.accessToken);
+        localStorage.setItem("refreshToken", data.payload.tokens.refreshToken);
+        setIsAuthenticated(true);
+      })
+      .catch((error: any) => {
+        if (error.name !== "AbortError") {
+          console.error(error?.message || "Session expired");
+        }
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        setIsAuthenticated(false);
+        if (redirectOnFail) router.push("/login");
+      })
+      .finally(() => {
+        if (timeoutId) clearTimeout(timeoutId);
+        setIsChecking(false);
+      });
+
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [router, redirectOnFail, timeoutMs]);
 
   return { isAuthenticated, isChecking };
 };
