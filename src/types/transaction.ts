@@ -17,6 +17,7 @@ export interface TransactionCardProps {
   description?: string;
   amount: number;
   date: string;
+  status: TransactionStatus;
 }
 
 export interface SummaryCardProps {
@@ -24,3 +25,7 @@ export interface SummaryCardProps {
   value: string;
   valueColor?: string;
 }
+
+export interface CreateTransactionDTO extends Omit<Transaction, "id"> {}
+
+export type UpdateTransactionDTO = Partial<Omit<Transaction, "id" | "userId">>;

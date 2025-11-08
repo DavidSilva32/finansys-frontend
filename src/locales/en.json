@@ -80,6 +80,22 @@
     "addExpense": "Add Expense",
     "listTitle": "Transaction List",
     "loading": "Loading...",
-    "noTransactions": "No transactions found."
+    "noTransactions": "No transactions found.",
+    "status": {
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "card": {
+      "edit": "Edit",
+      "remove": "Remove",
+      "confirmRemoveTitle": "Confirm deletion",
+      "confirmRemoveText": "Are you sure you want to remove this transaction?",
+      "cancel": "Cancel",
+      "removing": "Removing...",
+      "removeConfirm": "Remove",
+      "updated": "Transaction updated successfully",
+      "created": "Transaction created successfully"
+    }
   }
 }

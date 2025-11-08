@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { ApiResponse } from "@/types/apiResponse";
-import { CreateTransactionDTO, Transaction } from "@/types/transaction";
+import { Transaction, UpdateTransactionDTO } from "@/types/transaction";
 import { ApiRoutes } from "@/enum/apiRoutes";
 import { toast } from "sonner";
 
-export function useCreateTransaction() {
+export function useUpdateTransaction() {
   const [loading, setLoading] = useState(false);
 
-  const createTransaction = async (data: CreateTransactionDTO) => {
+  const updateTransaction = async (id: string, data: UpdateTransactionDTO) => {
     setLoading(true);
     try {
         console.log(data)
-      const res = await fetch(`${ApiRoutes.TRANSACTIONS.CREATE}`, {
-        method: "POST",
+      const res = await fetch(`${ApiRoutes.TRANSACTIONS.UPDATE(id)}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -33,5 +33,5 @@ export function useCreateTransaction() {
     }
   };
 
-  return { createTransaction, loading };
+  return { updateTransaction, loading };
 }

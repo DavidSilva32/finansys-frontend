@@ -80,6 +80,22 @@
     "addExpense": "Adicionar Despesa",
     "listTitle": "Lista de Transações",
     "loading": "Carregando...",
-    "noTransactions": "Nenhuma transação encontrada."
+    "noTransactions": "Nenhuma transação encontrada.",
+    "status": {
+      "pending": "Pendente",
+      "completed": "Paga",
+      "cancelled": "Cancelada"
+    },
+    "card": {
+      "edit": "Editar",
+      "remove": "Remover",
+      "confirmRemoveTitle": "Confirmar remoção",
+      "confirmRemoveText": "Tem certeza que deseja remover esta transação?",
+      "cancel": "Cancelar",
+      "removing": "Removendo...",
+      "removeConfirm": "Remover",
+      "updated": "Transação atualizada com sucesso",
+      "created": "Transação criada com sucesso"
+    }
   }
 }

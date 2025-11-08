@@ -22,49 +22,74 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TransactionStatus, TransactionType } from "@/enum/transationEnums";
-import { Transaction } from "@/types/transaction";
+import {
+  CreateTransactionDTO,
+  Transaction,
+  UpdateTransactionDTO,
+} from "@/types/transaction";
+import { useUpdateTransaction } from "@/hooks/useUpdateTransaction";
 
 const formSchema = z.object({
   type: z.enum(TransactionType),
   category: z.string().min(1, "Informe a categoria"),
   description: z.string().optional(),
-  amount: z.number().min(1, "Informe o valor"),
+  amount: z.preprocess(
+    (val) => Number(val),
+    z.number().min(1, "Informe o valor")
+  ),
   date: z.string().min(1, "Informe a data"),
   status: z.enum(TransactionStatus),
 });
 
 interface TransactionFormProps {
+  transaction?: Transaction;
+  userId?: string;
   defaultType?: TransactionType;
-  userId: string;
   onSuccess?: () => void;
 }
 
 export default function TransactionForm({
-    defaultType = TransactionType.INCOME,
-    userId,
-    onSuccess
+  transaction,
+  userId = "",
+  defaultType = TransactionType.INCOME,
+  onSuccess,
 }: TransactionFormProps) {
-  const { createTransaction, loading } = useCreateTransaction();
+  const { createTransaction, loading: creating } = useCreateTransaction();
+  const { updateTransaction, loading: updating } = useUpdateTransaction();
 
   const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      type: defaultType,
-      category: "",
-      description: "",
-      amount: 0,
-      date: "",
-      status: TransactionStatus.PENDING,
-    },
+    resolver: zodResolver(formSchema) as any,
+    defaultValues: transaction
+      ? {
+          type: transaction.type,
+          category: transaction.category,
+          description: transaction.description,
+          amount: transaction.amount,
+          date: transaction.date,
+          status: transaction.status,
+        }
+      : {
+          type: defaultType,
+          category: "",
+          description: "",
+          amount: 0,
+          date: "",
+          status: TransactionStatus.PENDING,
+        },
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const payload: Omit<Transaction, "id"> = {
-    ...values,
-    userId,
-  };
-    await createTransaction(payload);
-    form.reset({ ...form.getValues(), type: defaultType });
+    const basePayload = { ...values };
+
+    if (transaction) {
+      const payload: UpdateTransactionDTO = { ...basePayload };
+      await updateTransaction(transaction.id, payload);
+    } else {
+      const payload: CreateTransactionDTO = { ...basePayload, userId };
+      await createTransaction(payload);
+      form.reset({ ...form.getValues(), type: defaultType });
+    }
+
     if (onSuccess) onSuccess();
   };
 
@@ -75,7 +100,7 @@ export default function TransactionForm({
         className="space-y-4 bg-card p-6 rounded-xl shadow-md border border-border"
       >
         <h2 className="text-lg font-semibold text-center mb-4">
-          Nova Transação
+          {transaction ? "Editar Transação" : "Nova Transação"}
         </h2>
 
         {/* Tipo */}
@@ -86,16 +111,17 @@ export default function TransactionForm({
             <FormItem>
               <FormLabel>Tipo</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione o tipo" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={TransactionType.INCOME}>Entrada</SelectItem>
-                    <SelectItem value={TransactionType.EXPENSE}>Saída</SelectItem>
+                    <SelectItem value={TransactionType.INCOME}>
+                      Entrada
+                    </SelectItem>
+                    <SelectItem value={TransactionType.EXPENSE}>
+                      Saída
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -142,7 +168,12 @@ export default function TransactionForm({
             <FormItem>
               <FormLabel>Valor</FormLabel>
               <FormControl>
-                <Input type="number" step="0.01" placeholder="0,00" {...field} />
+                <Input
+                  type="number"
+                  step="0.01"
+                  placeholder="0,00"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -172,17 +203,20 @@ export default function TransactionForm({
             <FormItem>
               <FormLabel>Status</FormLabel>
               <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  value={field.value}
-                >
+                <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
                     <SelectValue placeholder="Selecione o status" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value={TransactionStatus.PENDING}>Pendente</SelectItem>
-                    <SelectItem value={TransactionStatus.COMPLETED}>Concluída</SelectItem>
-                    <SelectItem value={TransactionStatus.CANCELLED}>Cancelada</SelectItem>
+                    <SelectItem value={TransactionStatus.PENDING}>
+                      Pendente
+                    </SelectItem>
+                    <SelectItem value={TransactionStatus.COMPLETED}>
+                      Concluída
+                    </SelectItem>
+                    <SelectItem value={TransactionStatus.CANCELLED}>
+                      Cancelada
+                    </SelectItem>
                   </SelectContent>
                 </Select>
               </FormControl>
@@ -191,8 +225,16 @@ export default function TransactionForm({
           )}
         />
 
-        <Button type="submit" disabled={loading} className="w-full">
-          {loading ? "Salvando..." : "Criar Transação"}
+        <Button
+          type="submit"
+          disabled={creating || updating}
+          className="w-full"
+        >
+          {creating || updating
+            ? "Salvando..."
+            : transaction
+            ? "Salvar Alterações"
+            : "Criar Transação"}
         </Button>
       </form>
     </Form>
