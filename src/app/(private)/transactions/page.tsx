@@ -39,7 +39,7 @@ export default function TransactionsPage() {
       <h2 className="text-3xl font-bold mb-6">{t("transactions.title")}</h2>
 
       {/* Summary */}
-      <motion.section className="grid gap-4 md:grid-cols-3 mb-6">
+      <motion.section className="grid gap-4 md:grid-cols-3 mb-4">
         <TransactionSummaryCard
           title={t("transactions.income")}
           value={`R$ ${totalRevenue.toFixed(2)}`}
@@ -55,8 +55,13 @@ export default function TransactionsPage() {
           value={`R$ ${currentBalance.toFixed(2)}`}
           valueColor={currentBalance >= 0 ? "text-primary" : "text-red-500"}
         />
+      </motion.section>
 
-        <div className="md:col-span-3 mt-2 hidden md:flex justify-end">
+      {/* Quick Actions + Refresh Button */}
+      <div className="flex justify-between items-center mb-6">
+        <QuickActions userId={userId} />
+
+        <div className="hidden md:flex">
           <Button
             onClick={handleRefresh}
             size="sm"
@@ -69,11 +74,7 @@ export default function TransactionsPage() {
             {t("transactions.refresh")}
           </Button>
         </div>
-      </motion.section>
-
-      {/* Quick Actions with Modal */}
-      <QuickActions userId={userId} />
-
+      </div>
       {/* Transaction List */}
       <motion.section className="bg-card p-6 rounded-xl shadow-lg border border-border">
         <h3 className="text-lg font-semibold text-card-foreground mb-4">

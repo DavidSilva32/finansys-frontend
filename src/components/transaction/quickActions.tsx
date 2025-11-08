@@ -20,7 +20,7 @@ export function QuickActions({ userId }: QuickActionsProps) {
 
   return (
     <motion.section
-      className="flex flex-col sm:flex-row gap-4 mb-6"
+      className="flex flex-col sm:flex-row gap-4"
     >
       {/* Income Modal */}
       <Dialog open={isIncomeOpen} onOpenChange={setIsIncomeOpen}>
