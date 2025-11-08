@@ -20,7 +20,7 @@ export interface RegisterResponse {
 }
 
 export interface RefreshResponse {
-  tokens: Tokens
+  tokens: Tokens;
 }
 
 export interface ApiResponse<T> {

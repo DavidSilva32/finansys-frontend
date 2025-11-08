@@ -33,7 +33,7 @@
     "loginLink": "Log In"
   },
   "dashboard": {
-    "title": "Dashboard Summary",
+    "title": "Dashboard",
     "revenue": {
       "title": "Total Revenue",
       "description": "vs last month"
@@ -51,11 +51,14 @@
       "addExpense": "Record New Expense"
     },
     "cashflow": {
-      "title": "Cash Flow Overview (Placeholder)",
-      "placeholder": "Monthly Cash Flow Chart will be displayed here."
+      "title": "Cash Flow Overview",
+      "noData": "Monthly Cash Flow Chart will be displayed here."
     },
     "transactions": {
-      "title": "Recent Transactions (Mock)"
+      "title": "Transactions",
+      "loading": "Loading...",
+      "noTransactions": "No transactions found.",
+      "viewAll": "View All"
     },
     "modules": {
       "title": "Core Modules",
@@ -66,6 +69,54 @@
     },
     "footer": {
       "authStatus": "Auth Status"
+    }
+  },
+  "transactions": {
+  "title": "Transactions",
+  "income": "Income",
+  "expenses": "Expenses",
+  "balance": "Balance",
+  "refresh": "Refresh",
+  "addIncome": "Add Income",
+  "addExpense": "Add Expense",
+  "listTitle": "Transaction List",
+  "loading": "Loading...",
+  "noTransactions": "No transactions found.",
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+    },
+  "card": {
+    "edit": "Edit",
+    "remove": "Remove",
+    "confirmRemoveTitle": "Confirm deletion",
+    "confirmRemoveText": "Are you sure you want to remove this transaction?",
+    "cancel": "Cancel",
+    "removing": "Removing...",
+    "removeConfirm": "Remove",
+    "updated": "Transaction updated successfully",
+    "created": "Transaction created successfully"
+    },
+  "form": {
+    "newTitle": "New Transaction",
+    "editTitle": "Edit Transaction",
+    "typeLabel": "Type",
+    "typePlaceholder": "Select the type",
+    "typeIncome": "Income",
+    "typeExpense": "Expense",
+    "categoryLabel": "Category",
+    "categoryPlaceholder": "Ex: Food, Salary...",
+    "descriptionLabel": "Description",
+    "descriptionPlaceholder": "Optional",
+    "amountLabel": "Amount",
+    "amountPlaceholder": "0.00",
+    "dateLabel": "Date",
+    "statusLabel": "Status",
+    "statusPlaceholder": "Select the status",
+    "saving": "Saving...",
+    "saveChanges": "Save Changes",
+    "createTransaction": "Create Transaction"
     }
   }
 }

@@ -1,7 +1,7 @@
-import DashboardHeader from "@/components/layout/dashboardHeader";
+import PrivateHeader from "@/components/layout/privateHeader";
 import ProtectedLayout from "@/components/protectedLayout";
 
-export default function DashboardLayout({
+export default function PrivateLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ export default function DashboardLayout({
   return (
     <ProtectedLayout>
       <div className="min-h-screen bg-background flex flex-col">
-        <DashboardHeader />
+        <PrivateHeader />
         <main className="flex-1 p-4 md:p-6 lg:p-8 w-full">
           {children}
         </main>

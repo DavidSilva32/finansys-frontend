@@ -33,7 +33,7 @@
     "loginLink": "Entrar"
   },
   "dashboard": {
-    "title": "Resumo do Painel",
+    "title": "Painel",
     "revenue": {
       "title": "Receita Total",
       "description": "em relação ao mês passado"
@@ -51,11 +51,14 @@
       "addExpense": "Registrar Despesa"
     },
     "cashflow": {
-      "title": "Visão Geral do Fluxo de Caixa (Simulação)",
-      "placeholder": "O gráfico de fluxo de caixa mensal será exibido aqui."
+      "title": "Visão Geral do Fluxo de Caixa",
+      "noData": "O gráfico de fluxo de caixa mensal será exibido aqui."
     },
     "transactions": {
-      "title": "Transações Recentes (Simulação)"
+      "title": "Transações",
+      "loading": "Carregando...",
+      "noTransactions": "Nenhuma transação encontrada.",
+      "viewAll": "Ver todas"
     },
     "modules": {
       "title": "Módulos Principais",
@@ -66,6 +69,54 @@
     },
     "footer": {
       "authStatus": "Status de Autenticação"
+    }
+  },
+  "transactions": {
+    "title": "Transações",
+    "income": "Receitas",
+    "expenses": "Despesas",
+    "balance": "Saldo",
+    "refresh": "Atualizar",
+    "addIncome": "Adicionar Receita",
+    "addExpense": "Adicionar Despesa",
+    "listTitle": "Lista de Transações",
+    "loading": "Carregando...",
+    "noTransactions": "Nenhuma transação encontrada.",
+    "status": {
+      "pending": "Pendente",
+      "completed": "Paga",
+      "cancelled": "Cancelada"
+    },
+    "card": {
+      "edit": "Editar",
+      "remove": "Remover",
+      "confirmRemoveTitle": "Confirmar remoção",
+      "confirmRemoveText": "Tem certeza que deseja remover esta transação?",
+      "cancel": "Cancelar",
+      "removing": "Removendo...",
+      "removeConfirm": "Remover",
+      "updated": "Transação atualizada com sucesso",
+      "created": "Transação criada com sucesso"
+    },
+    "form": {
+    "newTitle": "Nova Transação",
+    "editTitle": "Editar Transação",
+    "typeLabel": "Tipo",
+    "typePlaceholder": "Selecione o tipo",
+    "typeIncome": "Entrada",
+    "typeExpense": "Saída",
+    "categoryLabel": "Categoria",
+    "categoryPlaceholder": "Ex: Alimentação, Salário...",
+    "descriptionLabel": "Descrição",
+    "descriptionPlaceholder": "Opcional",
+    "amountLabel": "Valor",
+    "amountPlaceholder": "0,00",
+    "dateLabel": "Data",
+    "statusLabel": "Status",
+    "statusPlaceholder": "Selecione o status",
+    "saving": "Salvando...",
+    "saveChanges": "Salvar Alterações",
+    "createTransaction": "Criar Transação"
     }
   }
 }
