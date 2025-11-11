@@ -7,7 +7,6 @@ import { useServerPing } from "@/hooks/useServerPing";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
 
 export default function Home() {
   const router = useRouter();
@@ -17,17 +16,12 @@ export default function Home() {
 
   const [serverConnecting, setServerConnecting] = useState(false);
 
-  const onServerReady = () => {
-    toast.success("Servidor pronto! Você pode disparar funções aqui.");
-  };
-
   useEffect(() => {
     if (!isServerReady && !serverConnecting) {
       setServerConnecting(true);
     } 
     if (isServerReady && serverConnecting) {
       setServerConnecting(false);
-      onServerReady();
     }
   }, [isServerReady, serverConnecting]);
 
