@@ -69,7 +69,7 @@
       "settings": "Configurações"
     },
     "footer": {
-      "authStatus": "Status de Autenticação"
+      "authStatus": "Autenticado | Pré-visualização do token"
     }
   },
   "transactions": {

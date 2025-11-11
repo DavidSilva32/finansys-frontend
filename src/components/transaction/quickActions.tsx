@@ -33,7 +33,7 @@ export function QuickActions() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Adicionar Receita</DialogTitle>
+            <DialogTitle>{t("transactions.addIncome")}</DialogTitle>
           </DialogHeader>
           <TransactionForm
             defaultType={TransactionType.INCOME}
@@ -52,7 +52,7 @@ export function QuickActions() {
         </DialogTrigger>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
-            <DialogTitle>Adicionar Despesa</DialogTitle>
+            <DialogTitle>{t("transactions.addExpense")}</DialogTitle>
           </DialogHeader>
           <TransactionForm
             defaultType={TransactionType.EXPENSE}

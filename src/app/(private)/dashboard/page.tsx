@@ -83,7 +83,7 @@ export default function Dashboard() {
           className="text-3xl font-bold text-card-foreground"
           {...motionProps}
         >
-          Dashboard
+          {t("dashboard.title")}
         </motion.h2>
 
         {/* Summary Cards */}
@@ -92,23 +92,23 @@ export default function Dashboard() {
           {...motionProps}
         >
           <SummaryCard
-            title="Revenue"
+            title={t("dashboard.revenue.title")}
             value={formattedRevenue}
-            description="Total income received"
+            description={t("dashboard.revenue.description")}
             icon={TrendingUp}
             valueColor="text-green-500"
           />
           <SummaryCard
-            title="Expenses"
+            title={t("dashboard.expenses.title")}
             value={formattedExpenses}
-            description="Total expenses paid"
+            description={t("dashboard.expenses.description")}
             icon={TrendingDown}
             valueColor="text-red-500"
           />
           <SummaryCard
-            title="Balance"
+            title={t("dashboard.balance.title")}
             value={formattedBalance}
-            description="Current balance"
+            description={t("dashboard.balance.description")}
             icon={DollarSign}
             valueColor={
               parseFloat(
@@ -130,17 +130,17 @@ export default function Dashboard() {
           {/* Cash Flow */}
           <motion.section
             className="bg-card p-6 rounded-xl shadow-lg border border-border lg:col-span-2 flex flex-col w-full min-w-0"
-            aria-label="Cash Flow Overview"
+            aria-label={t("dashboard.cashflow.title")}
             {...motionProps}
           >
             <h3 className="text-lg font-semibold text-card-foreground mb-4">
-              Cash Flow Overview
+              {t("dashboard.cashflow.title")}
             </h3>
 
             {chartData.length === 0 ||
             chartData.every((d) => d.income === 0 && d.expense === 0) ? (
               <p className="text-center text-muted-foreground mt-20">
-                No data available
+                {t("dashboard.cashflow.noData")}
               </p>
             ) : (
               <ChartContainer
@@ -181,18 +181,18 @@ export default function Dashboard() {
           {/* Recent Transactions */}
           <motion.aside
             className="bg-card p-6 rounded-xl shadow-lg border border-border flex flex-col w-full min-w-0"
-            aria-label="Recent Transactions"
+            aria-label={t("dashboard.transactions.title")}
             {...motionProps}
           >
             <h3 className="text-lg font-semibold text-card-foreground mb-4">
-              Recent Transactions
+              {t("dashboard.transactions.title")}
             </h3>
             <ul className="space-y-3 text-sm overflow-y-auto flex-1">
               {loading ? (
-                <li>Loading transactions...</li>
+                <li>{t("dashboard.transactions.loading")}</li>
               ) : transactions.length === 0 ? (
                 <li className="text-muted-foreground italic">
-                  No transactions found
+                  {t("dashboard.transactions.noTransactions")}
                 </li>
               ) : (
                 transactions.slice(0, 5).map((tx) => (
@@ -217,7 +217,7 @@ export default function Dashboard() {
                 variant="outline"
                 onClick={() => router.push("/transactions")}
               >
-                View All
+                {t("dashboard.transactions.viewAll")}
               </Button>
             </div>
           </motion.aside>
@@ -226,11 +226,11 @@ export default function Dashboard() {
         {/* Modules */}
         <motion.section
           className="border-t border-border pt-6 mt-8"
-          aria-label="Modules"
+          aria-label={t("dashboard.modules.title")}
           {...motionProps}
         >
           <h2 className="text-xl font-semibold text-card-foreground mb-4">
-            Modules
+            {t("dashboard.modules.title")}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <ModuleButton icon={FileText} title="Reports" />
@@ -246,7 +246,7 @@ export default function Dashboard() {
           {...motionProps}
         >
           <p className="text-xs text-muted-foreground">
-            Authenticated | Token Preview:{" "}
+            {t("dashboard.footer.authStatus")}:{" "}
             <code className="break-all">{formattedToken}</code>
           </p>
         </motion.footer>
