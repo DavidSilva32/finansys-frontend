@@ -67,7 +67,7 @@ export const useAuthCheck = ({
       })
       .catch((error: any) => {
         if (error.name !== "AbortError") {
-          console.error(error?.message || "Session expired");
+          console.error(error || "Session expired");
         }
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");

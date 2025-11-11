@@ -4,6 +4,7 @@
     "description": "Organize, automatize e acompanhe as finanças da sua empresa com uma plataforma moderna e segura.",
     "access": "Acessar o sistema",
     "loading": "Verificando...",
+    "connecting_server": "Conectando ao servidor...",
     "feature_automation": "Automatização",
     "feature_automation_desc": "Reduza tarefas manuais e ganhe tempo para focar no que importa.",
     "feature_control": "Controle em tempo real",
