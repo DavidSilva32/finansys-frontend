@@ -31,6 +31,6 @@ export interface FetchResult {
   status: number;
 }
 
-export interface CreateTransactionDTO extends Omit<Transaction, "id"> {}
+export interface CreateTransactionDTO extends Omit<Transaction, "id" | "userId"> {}
 
 export type UpdateTransactionDTO = Partial<Omit<Transaction, "id" | "userId">>;

@@ -8,11 +8,14 @@ export function useUpdateTransaction() {
 
   const updateTransaction = async (id: string, data: UpdateTransactionDTO) => {
     setLoading(true);
+    const accessToken = localStorage.getItem("accessToken");
+    
     try {
       const res = await fetch(`${ApiRoutes.TRANSACTIONS.UPDATE(id)}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`
         },
         body: JSON.stringify(data),
       });

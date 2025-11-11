@@ -21,7 +21,7 @@ export default function TransactionsPage() {
     totalExpenses,
     currentBalance,
     fetchTransactions,
-  } = useTransactions(userId);
+  } = useTransactions();
   const { t } = useI18n();
 
   async function handleRefresh() {
@@ -75,7 +75,7 @@ export default function TransactionsPage() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
         >
-          <QuickActions userId={userId} />
+          <QuickActions />
         </motion.div>
 
         <div className="hidden md:flex">

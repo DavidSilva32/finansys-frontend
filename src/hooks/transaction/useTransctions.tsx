@@ -1,50 +1,59 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { ApiRoutes } from "@/enum/apiRoutes";
 import { FetchResult, Transaction } from "@/types/transaction";
 import { ApiResponse } from "@/types/apiResponse";
 import { TransactionType } from "@/enum/transationEnums";
 
-export function useTransactions(userId?: string) {
+export function useTransactions() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(false);
 
   const fetchTransactions = useCallback(async (): Promise<FetchResult> => {
     setLoading(true);
+    const accessToken = localStorage.getItem("accessToken");
+    
     try {
-      const res = await fetch(
-        `${ApiRoutes.TRANSACTIONS.LIST}?userId=${userId}`
-      );
+      const res = await fetch(ApiRoutes.TRANSACTIONS.LIST, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+
       const data: ApiResponse<Transaction[]> = await res.json();
 
-      if (res.ok && data.payload) {
-        setTransactions(data.payload);
-        return { message: data.message, status: res.status };
-      } else {
-        setTransactions([]);
-        return {
-          message: data.message || "Erro ao carregar transações",
-          status: res.status,
-        };
-      }
+      if (!res.ok || !data.payload)
+        throw new Error(data.message || "Erro ao carregar transações");
+
+      setTransactions(data.payload);
+      return { message: data.message, status: res.status };
     } catch (error: any) {
       setTransactions([]);
       return { message: error.message || "Erro de conexão", status: 500 };
     } finally {
       setLoading(false);
     }
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
-    if (userId) fetchTransactions();
-  }, [userId, fetchTransactions]);
+    if (!loading) fetchTransactions();
+  }, [fetchTransactions]);
 
-  const totalRevenue = transactions
-    .filter((t) => t.type === TransactionType.INCOME)
-    .reduce((acc, t) => acc + t.amount, 0);
+  const totalRevenue = useMemo(
+    () =>
+      transactions
+        .filter((t) => t.type === TransactionType.INCOME)
+        .reduce((acc, t) => acc + t.amount, 0),
+    [transactions]
+  );
 
-  const totalExpenses = transactions
-    .filter((t) => t.type === TransactionType.EXPENSE)
-    .reduce((acc, t) => acc + t.amount, 0);
+  const totalExpenses = useMemo(
+    () =>
+      transactions
+        .filter((t) => t.type === TransactionType.EXPENSE)
+        .reduce((acc, t) => acc + t.amount, 0),
+    [transactions]
+  );
 
   const currentBalance = totalRevenue - totalExpenses;
 

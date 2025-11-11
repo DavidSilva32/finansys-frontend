@@ -1,4 +1,3 @@
-// hooks/useDeleteTransaction.ts
 "use client";
 
 import { ApiRoutes } from "@/enum/apiRoutes";
@@ -11,11 +10,14 @@ export function useDeleteTransaction() {
 
   const deleteTransaction = async (id: string) => {
     setLoading(true);
+    const accessToken = localStorage.getItem("accessToken")
+
     try {
       const response = await fetch(`${ApiRoutes.TRANSACTIONS.DELETE(id)}`, {
         method: "delete",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`
         },
       });
 

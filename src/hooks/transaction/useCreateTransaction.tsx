@@ -8,12 +8,15 @@ export function useCreateTransaction() {
 
   const createTransaction = async (data: CreateTransactionDTO) => {
     setLoading(true);
+    const accessToken = localStorage.getItem("accessToken");
+    
     try {
         console.log(data)
       const res = await fetch(`${ApiRoutes.TRANSACTIONS.CREATE}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(data),
       });

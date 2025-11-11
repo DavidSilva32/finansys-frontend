@@ -15,11 +15,8 @@ import { useI18n } from "@/context/I18nContext";
 import TransactionForm from "./transactionForm";
 import { Button } from "../ui/button";
 
-interface QuickActionsProps {
-  userId: string;
-}
 
-export function QuickActions({ userId }: QuickActionsProps) {
+export function QuickActions() {
   const { t } = useI18n();
   const [isIncomeOpen, setIsIncomeOpen] = useState(false);
   const [isExpenseOpen, setIsExpenseOpen] = useState(false);
@@ -40,7 +37,6 @@ export function QuickActions({ userId }: QuickActionsProps) {
           </DialogHeader>
           <TransactionForm
             defaultType={TransactionType.INCOME}
-            userId={userId}
             onSuccess={() => setIsIncomeOpen(false)}
           />
         </DialogContent>
@@ -60,7 +56,6 @@ export function QuickActions({ userId }: QuickActionsProps) {
           </DialogHeader>
           <TransactionForm
             defaultType={TransactionType.EXPENSE}
-            userId={userId}
             onSuccess={() => setIsExpenseOpen(false)}
           />
         </DialogContent>

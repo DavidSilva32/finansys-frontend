@@ -14,7 +14,6 @@ import { useMemo } from "react";
 import { SummaryCard } from "@/components/dashboard/summaryCard";
 import { useI18n } from "@/context/I18nContext";
 import { useTransactions } from "@/hooks/transaction/useTransctions";
-import { decodeTokenPayload } from "@/lib/authUtils";
 import { useRouter } from "next/navigation";
 import { QuickActions } from "@/components/transaction/quickActions";
 
@@ -40,9 +39,8 @@ export default function Dashboard() {
     return accessToken ? accessToken.substring(0, 15) + "..." : "N/A";
   }, [accessToken]);
 
-  const userId = accessToken ? decodeTokenPayload(accessToken)?.sub : null;
   const { transactions, totalRevenue, totalExpenses, currentBalance, loading } =
-    useTransactions(userId);
+    useTransactions();
 
   const formattedRevenue = `$${totalRevenue.toFixed(2)}`;
   const formattedExpenses = `$${totalExpenses.toFixed(2)}`;
@@ -124,7 +122,7 @@ export default function Dashboard() {
 
         {/* Quick Actions */}
         <motion.section {...motionProps}>
-          <QuickActions userId={userId} />
+          <QuickActions  />
         </motion.section>
 
         {/* Data Sections */}

@@ -52,14 +52,12 @@ const formSchema = z.object({
 
 interface TransactionFormProps {
   transaction?: Transaction;
-  userId?: string;
   defaultType?: TransactionType;
   onSuccess?: () => void;
 }
 
 export default function TransactionForm({
   transaction,
-  userId = "",
   defaultType = TransactionType.INCOME,
   onSuccess,
 }: TransactionFormProps) {
@@ -96,7 +94,7 @@ export default function TransactionForm({
       const result = await updateTransaction(transaction.id, payload);
       handleToast(result);
     } else {
-      const payload: CreateTransactionDTO = { ...basePayload, userId };
+      const payload: CreateTransactionDTO = { ...basePayload };
       const result = await createTransaction(payload);
       handleToast(result);
       form.reset({ ...form.getValues(), type: defaultType });
