@@ -17,7 +17,7 @@ import {
   DialogFooter,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useDeleteTransaction } from "@/hooks/useDeleteTransaction";
+import { useDeleteTransaction } from "@/hooks/transaction/useDeleteTransaction";
 import { Button } from "../ui/button";
 import TransactionForm from "./transactionForm";
 import { useI18n } from "@/context/I18nContext";
@@ -149,9 +149,7 @@ export const TransactionCard: React.FC<Transaction> = ({
       {isEditOpen && (
         <Dialog open={isEditOpen} onOpenChange={setIsEditOpen}>
           <DialogContent className="sm:max-w-[500px]">
-            <DialogTitle>
-              {t("transactions.card.edit")}
-            </DialogTitle>
+            <DialogTitle>{t("transactions.card.edit")}</DialogTitle>
             <TransactionForm
               transaction={{
                 id,

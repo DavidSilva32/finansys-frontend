@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTransactions } from "@/hooks/useTransctions";
+import { useTransactions } from "@/hooks/transaction/useTransctions";
 import { TransactionSummaryCard } from "@/components/transaction/transactionSummaryCard";
 import { TransactionCard } from "@/components/transaction/transactionCard";
 import { decodeTokenPayload } from "@/lib/authUtils";

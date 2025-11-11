@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useCreateTransaction } from "@/hooks/useCreateTransaction";
+import { useCreateTransaction } from "@/hooks/transaction/useCreateTransaction";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -27,11 +27,15 @@ import {
   Transaction,
   UpdateTransactionDTO,
 } from "@/types/transaction";
-import { useUpdateTransaction } from "@/hooks/useUpdateTransaction";
+import { useUpdateTransaction } from "@/hooks/transaction/useUpdateTransaction";
 import { handleToast } from "@/lib/toast";
 import { useI18n } from "@/context/I18nContext";
 import { formatLocalizedDate } from "@/lib/date";
-import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
 import { Calendar } from "../ui/calendar";
 
 const formSchema = z.object({
@@ -123,7 +127,9 @@ export default function TransactionForm({
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
-                    <SelectValue placeholder={t("transactions.form.typePlaceholder")} />
+                    <SelectValue
+                      placeholder={t("transactions.form.typePlaceholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={TransactionType.INCOME}>
@@ -166,7 +172,10 @@ export default function TransactionForm({
             <FormItem>
               <FormLabel>{t("transactions.form.descriptionLabel")}</FormLabel>
               <FormControl>
-                <Input placeholder={t("transactions.form.descriptionPlaceholder")} {...field} />
+                <Input
+                  placeholder={t("transactions.form.descriptionPlaceholder")}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -195,34 +204,37 @@ export default function TransactionForm({
 
         {/* Data */}
         <FormField
-  control={form.control}
-  name="date"
-  render={({ field }) => (
-    <FormItem>
-      <FormLabel>{t("transactions.form.dateLabel")}</FormLabel>
-      <FormControl>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Input
-              placeholder="Escolha a data"
-              value={field.value ? formatLocalizedDate(field.value, locale) : ""}
-              readOnly
-            />
-          </PopoverTrigger>
-          <PopoverContent>
-            <Calendar
-              mode="single"
-              selected={field.value ? new Date(field.value) : undefined}
-              onSelect={(date) => field.onChange(date?.toISOString())}
-            />
-          </PopoverContent>
-        </Popover>
-      </FormControl>
-      <FormMessage />
-    </FormItem>
-  )}
-/>
-
+          control={form.control}
+          name="date"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t("transactions.form.dateLabel")}</FormLabel>
+              <FormControl>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Input
+                      placeholder="Escolha a data"
+                      value={
+                        field.value
+                          ? formatLocalizedDate(field.value, locale)
+                          : ""
+                      }
+                      readOnly
+                    />
+                  </PopoverTrigger>
+                  <PopoverContent>
+                    <Calendar
+                      mode="single"
+                      selected={field.value ? new Date(field.value) : undefined}
+                      onSelect={(date) => field.onChange(date?.toISOString())}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
         {/* Status */}
         <FormField
@@ -234,7 +246,9 @@ export default function TransactionForm({
               <FormControl>
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
-                    <SelectValue placeholder={t("transactions.form.statusPlaceholder")} />
+                    <SelectValue
+                      placeholder={t("transactions.form.statusPlaceholder")}
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value={TransactionStatus.PENDING}>

@@ -2,6 +2,8 @@ export class ApiRoutes {
   static readonly BASE_URL =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:3080";
 
+  static readonly HEALTH = `${this.BASE_URL}/health`
+  
   static readonly AUTH = {
     LOGIN: `${this.BASE_URL}/auth/login`,
     REGISTER: `${this.BASE_URL}/auth/register`,

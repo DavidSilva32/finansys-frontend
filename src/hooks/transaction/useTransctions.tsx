@@ -54,6 +54,6 @@ export function useTransactions(userId?: string) {
     totalRevenue,
     totalExpenses,
     currentBalance,
-    fetchTransactions, // 👈 retorna pra você usar manualmente
+    fetchTransactions,
   };
 }
