@@ -26,8 +26,6 @@ export default function Home() {
   }, [isServerReady, serverConnecting]);
 
   const goToLogin = () => {
-    if (authChecking) return;
-
     router.push(isAuthenticated ? "/dashboard" : "/login");
   };
 
